@@ -1,0 +1,15 @@
+services:
+  angular-escomio-app:
+    container_name: angular-escomio-container_name
+    build: .
+    image: angular-escomio:v1
+    ports:
+      - 80:80
+    expose:
+      - 80
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge
