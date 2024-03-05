@@ -1,6 +1,10 @@
 # Prevents the following files to be served in the container
-**/node_modules/
-**/.git
+**/node_modules
+**/dist
+**/e2e
+**/docs
+*.gitignore
+*.zip
 **/README.md
 **/LICENSE
 **/.vscode
@@ -9,4 +13,3 @@
 **/.env
 **/.editorconfig
 **/.aws
-**/dist
