@@ -27,7 +27,10 @@ RUN npm run build
 FROM nginx:stable-alpine
 
 # Serves app files to nginx folder
-COPY --from=build /app/angular-escomio/ /usr/share/nginx/html
+COPY --from=build /app/dist/angular-escomio /usr/share/nginx/html
+
+# Copies nginx configuration file to container
+COPY --from=build /app/nginx.conf  /etc/nginx/conf.d/default.conf
 
 # Exposes port 80 (Web server - http)
 EXPOSE 80
