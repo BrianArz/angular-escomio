@@ -4,17 +4,18 @@
 # Gets node image
 FROM node:20.11.1-alpine AS build
 
+# Adds git for version control
+RUN apk update
+RUN apk add --no-cache git
+
 # Creates application folder on container
 WORKDIR /app
 
-# Copies package and package-lock files 
+# Copies package and package-lock files
 COPY package*.json ./
 
-# Installs all npm module
+# Installs all npm modules
 RUN npm install
-
-# Avoids version script from running
-RUN touch .skip_version_file
 
 # Runs Angular-Ivy compatibility compiler (es2023 processing) - Takes non-ivy libraries and makes them understandable
 RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
