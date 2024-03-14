@@ -13,6 +13,9 @@ COPY package*.json ./
 # Installs all npm module
 RUN npm install
 
+# Avoids version script from running
+RUN touch .skip_version_file
+
 # Runs Angular-Ivy compatibility compiler (es2023 processing) - Takes non-ivy libraries and makes them understandable
 RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-entry-points
 
