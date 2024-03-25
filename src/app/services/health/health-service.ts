@@ -1,17 +1,15 @@
-//#region Imports
-// Packages
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+// Models
+import { ApiMessageResponse } from '../../models/api/api-message-response';
+
 // Utils
 import * as API from '../../utils/protocols/api.protocols';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
-import { ApiMessageResponse } from '../../models/api/api-message-response';
-
 import { environment } from '../../../environments/environment';
-//#endregion
 
 /**
  * Health Service
