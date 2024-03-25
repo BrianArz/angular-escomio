@@ -1,5 +1,3 @@
-//#region Imports
-// Auxiliar imports
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,9 +11,9 @@ import { ApiMessageResponse } from '../../models/api/api-message-response'
 // Protocols imports
 import * as API from '../../utils/protocols/api.protocols';
 
+// Utils
 import { environment } from '../../../environments/environment';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
-//#endregion
 
 @Injectable({
     providedIn: 'root'
