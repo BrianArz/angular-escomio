@@ -1,13 +1,18 @@
 import { RouterOutlet } from '@angular/router';
 import { Component } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+// Modules
+import { NavbarComponent } from './components/navbar/navbar.component';
+
+// Utils
 import { environment } from '../environments/environment';
 import { version, commitHash } from '../environments/version';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
