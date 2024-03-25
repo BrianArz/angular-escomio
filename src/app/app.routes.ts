@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
-import { WelcomeComponent } from './welcome/welcome.component';
+// Components
+import { LoginComponent } from './components/login/login.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+
+// Common Protocols
+import * as APP from './utils/protocols/common.protocols';
 
 export const routes: Routes = [
-    { path: 'login' , component: LoginComponent },
-    { path: 'welcome' , component: WelcomeComponent },
-    { path: '', redirectTo: 'welcome', pathMatch: 'full'},
-    { path: '**', redirectTo: 'welcome', pathMatch: 'full'},
+    { path: APP.LOGIN , component: LoginComponent },
+    { path: APP.WELCOME , component: WelcomeComponent },
+    { path: '', redirectTo: APP.WELCOME, pathMatch: 'full'},
+    { path: '**', redirectTo: APP.WELCOME, pathMatch: 'full'},
 ];
 
 @NgModule({
