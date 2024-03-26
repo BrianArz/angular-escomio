@@ -43,8 +43,9 @@ export class AuthService {
    * @param token User access token
    * @returns Authenticated welcome message
    */
-     public authorizedHelloWorld(token: string) {
+     public authorizedHelloWorld(token: string): Observable<any> {
         const headers = { 'Authorization': `Bearer ${token}` }
         return this.http.get<ApiMessageResponse>(this.apiUrl + "/" + API.AUTHORIZED_HELLO_WORLD, { headers });
     }
 }
+
