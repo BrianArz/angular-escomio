@@ -37,4 +37,4 @@ COPY --from=build /app/dist/angular-escomio /usr/share/nginx/html
 COPY --from=build /app/nginx.conf  /etc/nginx/conf.d/default.conf
 
 # Exposes port 80 (Web server - http)
-EXPOSE 80
+EXPOSE 4200

@@ -4,9 +4,9 @@ services:
     build: .
     image: angular-escomio:v1
     ports:
-      - 80:80
+      - 4200:80
     expose:
-      - 80
+      - 4200
     networks:
       - internalnet
 
