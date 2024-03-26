@@ -8,12 +8,13 @@ import { NavbarComponent } from '../navbar/navbar.component';
 // Services
 import { HealthService } from './../../services/health/health-service';
 import { AuthService } from '../../services/auth/auth-service';
+import { RasaService } from '../../services/rasa/rasa-service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, NavbarComponent],
-  providers: [AuthService, HealthService],
+  providers: [AuthService, HealthService, RasaService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -25,12 +26,15 @@ export class LoginComponent {
   serviceVersion: string = '';
   credentials = {} as Credentials;
   responseMessage: string = '';
+  idToken: string = '';
   authorizedReponseMessage = '';
+  testQuestionResponseMessage: string = '';
 
   // Constructor with dependency injections
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private raseService: RasaService,
   ) {
     this.userLogin = this.formBuilder.group({
       email: ['', Validators.required],
@@ -52,7 +56,10 @@ export class LoginComponent {
         this.responseMessage = 'Login request completed sucessfully. Check console log';
         console.log(response);
 
-        this.authorizedWelcome(response.id_token);
+        // Waits half a second
+        setTimeout(() => {
+          this.authorizedWelcome(response.id_token);
+        }, 500);
       },
       error: (error) => {
         this.responseMessage = 'Login request failed! Check console log';
@@ -69,6 +76,11 @@ export class LoginComponent {
     this.authService.authorizedHelloWorld(token).subscribe({
       next: (response) => {
         this.authorizedReponseMessage = response.message;
+
+        // Waits half a second
+        setTimeout(() => {
+          this.testQuestion(token, 'Sender1', 'cual es tu funcion?');
+        }, 500);
       },
       error: (error) => {
         this.authorizedReponseMessage = error.message;
@@ -78,10 +90,27 @@ export class LoginComponent {
   }
 
   /**
+   * Calls test question endpoint
+   * @param token User access token
+   */
+  testQuestion(token: string, sender: string, message: string) {
+    this.raseService.testQuestion(token, sender, message).subscribe({
+      next: (response) => {
+        this.testQuestionResponseMessage = `Rasa Response: ${response.text}`;
+      },
+      error: (error) => {
+        this.testQuestionResponseMessage = error.message;
+        console.log(error.message);
+      }
+    })
+  }
+
+  /**
    * Cleans string view variables
    */
   clearView() {
     this.responseMessage = '';
     this.authorizedReponseMessage = '';
+    this.testQuestionResponseMessage = '';
   }
 }
