@@ -16,7 +16,7 @@ export const buildDate = '${buildDate}';
 export const commitHash = '${commitHash}';
 `;
 
-fs.writeFileSync("./src/environments/version.prod.ts", content);
+fs.writeFileSync("./src/environments/version.ts", content);
 
 
 
