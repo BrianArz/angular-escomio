@@ -5,11 +5,3 @@ services:
     image: angular-escomio:v1
     ports:
       - 4200:80
-    expose:
-      - 4200
-    networks:
-      - internalnet
-
-networks:
-  internalnet:
-    driver: bridge
