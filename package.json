@@ -6,6 +6,7 @@
     "start-dev": "npm run prebuild && ng serve --configuration development --open",
     "start-prod": "npm run prebuild && ng serve --configuration production --open",
     "build": "ng build --configuration production",
+    "build-docker": "ng build --configuration docker",
     "prebuild": "node ./version.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
