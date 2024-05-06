@@ -38,7 +38,6 @@ Thumbs.db
 
 # Env variable
 environment.prod.ts
-environment.ts
-version.prod.ts
+environment.docker.ts
 version.ts
 

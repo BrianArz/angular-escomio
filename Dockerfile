@@ -24,7 +24,8 @@ RUN npx ngcc --properties es2023 browser module main --first-only --create-ivy-e
 COPY . .
 
 # Runs application
-RUN npm run build
+RUN npm run prebuild
+RUN npm run build-docker
 
 # Stage 2:
 # Gets Nginx image

@@ -28,12 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "fileReplacements": [
-              {
-                "replace": "src/environments/version.ts",
-                "with": "src/environments/version.prod.ts"
-              }
-            ],
+            "fileReplacements": [],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -46,10 +41,6 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "src/environments/version.ts",
-                  "with": "src/environments/version.prod.ts"
                 }
               ],
               "budgets": [
@@ -70,6 +61,27 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "docker": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.docker.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
             }
           },
           "defaultConfiguration": "production"
