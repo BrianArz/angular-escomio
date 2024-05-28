@@ -21,7 +21,7 @@ import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 export class AuthService {
 
     //Gets API full url from api protocols
-    private apiUrl: string = environment.API_DIR + ":" + environment.API_PORT;
+    private apiUri: string = environment.API_DIR + ":" + environment.API_PORT;
 
     constructor(
         private http: HttpClient,
@@ -32,8 +32,9 @@ export class AuthService {
      * @param credentials User email and password
      */
 
-    public login(credentials: Credentials): Observable<any> {
-        return this.http.post<SignInResponse>(this.apiUrl + "/" + API.LOGIN, credentials).pipe(
+    public login(credentials: Credentials): Observable<SignInResponse> {
+        const url = this.formApiUrl(API.LOGIN)
+        return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
     }
@@ -43,9 +44,19 @@ export class AuthService {
    * @param token User access token
    * @returns Authenticated welcome message
    */
-     public authorizedHelloWorld(token: string): Observable<any> {
-        const headers = { 'Authorization': `Bearer ${token}` }
-        return this.http.get<ApiMessageResponse>(this.apiUrl + "/" + API.AUTHORIZED_HELLO_WORLD, { headers });
+     public authorizedHelloWorld(): Observable<any> {
+        const url = this.formApiUrl(API.AUTHORIZED_HELLO_WORLD)
+        return this.http.get<ApiMessageResponse>(url, { withCredentials: true }).pipe(
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+          );
+    }
+
+    private formApiUrl(endpoint:string): string{
+        return `${this.apiUri}/${endpoint}`;
+    }
+
+    public saveExpirationTime(expiresIn: number){
+        localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
     }
 }
 
