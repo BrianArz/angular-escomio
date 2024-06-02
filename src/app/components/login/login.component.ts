@@ -58,7 +58,7 @@ export class LoginComponent {
 
         // Waits half a second
         setTimeout(() => {
-          this.authorizedWelcome(response.id_token);
+          this.authorizedWelcome();
         }, 500);
       },
       error: (error) => {
@@ -72,14 +72,14 @@ export class LoginComponent {
    * Calls authorized hello world endpoint
    * @param token User access token
    */
-  authorizedWelcome(token: string) {
-    this.authService.authorizedHelloWorld(token).subscribe({
+  authorizedWelcome() {
+    this.authService.authorizedHelloWorld().subscribe({
       next: (response) => {
         this.authorizedReponseMessage = response.message;
 
         // Waits half a second
         setTimeout(() => {
-          this.testQuestion(token, 'Sender1', 'cual es tu funcion?');
+          this.testQuestion('Sender1', 'cual es tu funcion?');
         }, 500);
       },
       error: (error) => {
@@ -93,8 +93,8 @@ export class LoginComponent {
    * Calls test question endpoint
    * @param token User access token
    */
-  testQuestion(token: string, sender: string, message: string) {
-    this.raseService.testQuestion(token, sender, message).subscribe({
+  testQuestion(sender: string, message: string) {
+    this.raseService.testQuestion(sender, message).subscribe({
       next: (response) => {
         this.testQuestionResponseMessage = `Rasa Response: ${response.text}`;
       },

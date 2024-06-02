@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 // Models imports
 import { Credentials } from '../../models/user/user-credentials';
@@ -21,7 +21,7 @@ import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 export class AuthService {
 
     //Gets API full url from api protocols
-    private apiUrl: string = environment.API_DIR + ":" + environment.API_PORT;
+    private apiUri: string = environment.API_DIR + ":" + environment.API_PORT;
 
     constructor(
         private http: HttpClient,
@@ -31,9 +31,12 @@ export class AuthService {
      * Logs into api using email and password
      * @param credentials User email and password
      */
-
-    public login(credentials: Credentials): Observable<any> {
-        return this.http.post<SignInResponse>(this.apiUrl + "/" + API.LOGIN, credentials).pipe(
+    public login(credentials: Credentials): Observable<SignInResponse> {
+        const url = this.formApiUrl(API.LOGIN)
+        return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
+            tap(response => {
+                this.saveExpirationTime(response.expires_in);
+            }),
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
     }
@@ -43,9 +46,37 @@ export class AuthService {
    * @param token User access token
    * @returns Authenticated welcome message
    */
-     public authorizedHelloWorld(token: string): Observable<any> {
-        const headers = { 'Authorization': `Bearer ${token}` }
-        return this.http.get<ApiMessageResponse>(this.apiUrl + "/" + API.AUTHORIZED_HELLO_WORLD, { headers });
+     public authorizedHelloWorld(): Observable<any> {
+        const url = this.formApiUrl(API.AUTHORIZED_HELLO_WORLD)
+        return this.http.get<ApiMessageResponse>(url, { withCredentials: true }).pipe(
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+          );
+    }
+
+    /**
+     * Form auth service endpoints complete url
+     * @param endpoint Individual endpoint route
+     * @returns Full url string
+     */
+    private formApiUrl(endpoint:string): string{
+        return `${this.apiUri}/${endpoint}`;
+    }
+
+    /**
+     * Saves token expiration time in local storage
+     * @param expiresIn Token expiration time in seconds
+     */
+    public saveExpirationTime(expiresIn: number){
+        localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
+    }
+
+    /**
+     * Verifies if local storage has expiration time value
+     * @returns True if there's expiration time
+     */
+    public isLogged() {
+        const expiresIn = localStorage.getItem(API.EXPIRES_IN);
+        return !!expiresIn;
     }
 }
 
