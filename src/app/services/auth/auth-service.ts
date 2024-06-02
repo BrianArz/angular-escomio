@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 // Models imports
 import { Credentials } from '../../models/user/user-credentials';
@@ -31,10 +31,12 @@ export class AuthService {
      * Logs into api using email and password
      * @param credentials User email and password
      */
-
     public login(credentials: Credentials): Observable<SignInResponse> {
         const url = this.formApiUrl(API.LOGIN)
         return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
+            tap(response => {
+                this.saveExpirationTime(response.expires_in);
+            }),
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
     }
@@ -51,12 +53,30 @@ export class AuthService {
           );
     }
 
+    /**
+     * Form auth service endpoints complete url
+     * @param endpoint Individual endpoint route
+     * @returns Full url string
+     */
     private formApiUrl(endpoint:string): string{
         return `${this.apiUri}/${endpoint}`;
     }
 
+    /**
+     * Saves token expiration time in local storage
+     * @param expiresIn Token expiration time in seconds
+     */
     public saveExpirationTime(expiresIn: number){
         localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
+    }
+
+    /**
+     * Verifies if local storage has expiration time value
+     * @returns True if there's expiration time
+     */
+    public isLogged() {
+        const expiresIn = localStorage.getItem(API.EXPIRES_IN);
+        return !!expiresIn;
     }
 }
 
