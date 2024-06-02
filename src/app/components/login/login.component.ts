@@ -52,18 +52,12 @@ export class LoginComponent {
     this.credentials.password = this.userLogin.value.password;
 
     this.authService.login(this.credentials).subscribe({
-      next: (response) => {
+      next: () => {
         this.responseMessage = 'Login request completed sucessfully. Check console log';
-        console.log(response);
-
-        // Waits half a second
-        setTimeout(() => {
-          this.authorizedWelcome();
-        }, 500);
+        this.authorizedWelcome();
       },
-      error: (error) => {
-        this.responseMessage = 'Login request failed! Check console log';
-        console.log(error.message);
+      error: () => {
+        this.responseMessage = 'Login request failed!';
       }
     })
   }
@@ -76,15 +70,10 @@ export class LoginComponent {
     this.authService.authorizedHelloWorld().subscribe({
       next: (response) => {
         this.authorizedReponseMessage = response.message;
-
-        // Waits half a second
-        setTimeout(() => {
-          this.testQuestion('Sender1', 'cual es tu funcion?');
-        }, 500);
+        this.testQuestion('Sender1', 'cual es tu funcion?');
       },
       error: (error) => {
         this.authorizedReponseMessage = error.message;
-        console.log(error.message);
       }
     });
   }
@@ -100,7 +89,6 @@ export class LoginComponent {
       },
       error: (error) => {
         this.testQuestionResponseMessage = error.message;
-        console.log(error.message);
       }
     })
   }
