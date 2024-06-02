@@ -9,17 +9,13 @@ export class HttpErrorHandler {
      * @returns An Observable that always throws an error with a customized message.
      */
     static handleHttpError( httpError: HttpErrorResponse ) {
-        let errorMessage = 'An unknown error ocurred.';
-
+        let errorMessage = `An unknown error ocurred. ${httpError.error}`;
         if ( httpError.error instanceof ErrorEvent )
             errorMessage = `Client side or network error: ${httpError.error.message}`;
-
         else if ( httpError instanceof ProgressEvent ) 
             errorMessage = 'Internal server error';
-
         else
             errorMessage = httpError.status ? `Error ${httpError.status} - ${httpError.statusText} : ${httpError.error.message}`: errorMessage;
-        
         return throwError ( () => new Error(errorMessage) );
     }
 }
