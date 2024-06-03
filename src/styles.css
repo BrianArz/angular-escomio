@@ -1,0 +1,58 @@
+/* COLORS */
+:root {
+    --oxford-blue: #0C192A;
+    --saphire-blue: #016797;
+    --cyan-process: #00B0EC;
+    --snow: #FEFAF9;
+    --rich-black: #04090F;
+}
+
+/* Fonts */
+@font-face {
+    font-family: "Montserrat-Escomio-Italic";
+    src: url("../src/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
+}
+@font-face {
+    font-family: "Montserrat-Escomio";
+    src: url("../src/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+/* End Fonts */
+
+/* Backgrounds */
+.bg-oxford-blue {
+    background-color: var(--oxford-blue) !important;
+}
+/* End Backgrounds */
+
+/* Color text */
+.txt-snow {
+    color: var(--snow) !important;
+}
+/* End Color text */
+/* END COLORS */
+
+/* GENERALS */
+html, body {
+    font-family: "Montserrat-Escomio", sans-serif !important;
+    font-size: 1rem;
+}
+
+.full-w-h-container {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.flex-center-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* END GENERALS */
+
+/* COMPONENTS */
+app-welcome {
+    width: 100%;
+    height: 100%;
+}
+/* END COMPONENTS */
+
