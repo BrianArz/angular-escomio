@@ -41,16 +41,16 @@ export class AuthService {
         )
     }
 
-     /**
-   * Gets authenticated welcome from server
-   * @param token User access token
-   * @returns Authenticated welcome message
-   */
-     public authorizedHelloWorld(): Observable<any> {
+    /**
+  * Gets authenticated welcome from server
+  * @param token User access token
+  * @returns Authenticated welcome message
+  */
+    public authorizedHelloWorld(): Observable<any> {
         const url = this.formApiUrl(API.AUTHORIZED_HELLO_WORLD)
         return this.http.get<ApiMessageResponse>(url, { withCredentials: true }).pipe(
             catchError(error => HttpErrorHandler.handleHttpError(error))
-          );
+        );
     }
 
     /**
@@ -58,7 +58,7 @@ export class AuthService {
      * @param endpoint Individual endpoint route
      * @returns Full url string
      */
-    private formApiUrl(endpoint:string): string{
+    private formApiUrl(endpoint: string): string {
         return `${this.apiUri}/${endpoint}`;
     }
 
@@ -66,7 +66,7 @@ export class AuthService {
      * Saves token expiration time in local storage
      * @param expiresIn Token expiration time in seconds
      */
-    public saveExpirationTime(expiresIn: number){
+    public saveExpirationTime(expiresIn: number) {
         localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
     }
 
