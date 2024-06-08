@@ -40,6 +40,9 @@
 .escomio-txt-saphire-blue {
     color: var(--saphire-blue) !important;
 }
+.escomio-txt-cyan-process {
+    color: var(--cyan-process) !important;
+}
 .escomio-txt-rich-black {
     color: var(--rich-black) !important;
 }
