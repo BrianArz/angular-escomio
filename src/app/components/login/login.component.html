@@ -15,25 +15,65 @@
             <span class="h1 d-block mb-3 escomio-txt-oxford-blue">Inicio de sesión</span>
             <span class="h5 d-block escomio-txt-rich-black">¡Bienvenido al asistente virtual Escomio!</span>
 
-            <form [formGroup]="userLogin" class="mt-5">
-                <!-- Inputs -->
+            <form 
+                [formGroup]="userLogin" 
+                class="mt-5"
+            >
+                <!-- Email -->
                 <div class="mb-4">
                     <label for="email-input" class="form-label">Correo electrónico</label>
-                    <input formControlName="email" type="email" class="form-control" id="email-input">
+                    <input 
+                        formControlName="email" 
+                        [ngClass]="{ 'is-invalid': email?.invalid && email?.touched } "
+                        type="email" 
+                        class="form-control" 
+                        id="email-input" 
+                    />
+                    <div *ngIf="email?.invalid && email?.touched" class="invalid-feedback">
+                        <div *ngIf="email?.errors?.['required']">
+                            Ingresa el correo electrónico
+                        </div>
+                        <div *ngIf="email?.errors?.['pattern']">
+                            Formato inválido
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Password -->
                 <div class="mb-2">
                     <label for="password-input" class="form-label">Contraseña</label>
-                    <input formControlName="password" type="password" class="form-control" id="password-input">
+                    <input 
+                        formControlName="password" 
+                        [ngClass]="{ 'is-invalid': password?.invalid && password?.touched }"
+                        [type]="passwordFieldType" 
+                        class="form-control" 
+                        id="password-input" 
+                    />
+                    <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
+                        <div *ngIf="password?.errors?.['required']">
+                            Ingresa la contraseña
+                        </div>
+                        <div *ngIf="password?.errors?.['minlength']">
+                            La contraseña debe de tener al menos 8 caractéres
+                        </div>
+                    </div>
                 </div>
+
                 <div class="mb-4 form-check">
-                    <input type="checkbox" class="form-check-input" id="show-password-checkbox">
+                    <input
+                        (change)="togglePassword()"
+                        type="checkbox" 
+                        class="form-check-input" 
+                        id="show-password-checkbox" 
+                    />
                     <label class="form-check-label" for="show-password-checkbox">Mostrar contraseña</label>
                 </div>
 
                 <!-- Action button -->
                 <button *ngIf="!isLoading" (click)="login()" type="submit"
                     class="btn col-12 col-sm-12 escomio-bg-saphire-blue escomio-txt-snow">
-                    Iniciar sesión</button>
+                    Iniciar sesión
+                </button>
 
                 <!-- Spinner -->
                 <div *ngIf="isLoading" class="d-flex justify-content-center">
@@ -41,7 +81,6 @@
                         <span class="visually-hidden">Cargando...</span>
                     </div>
                 </div>
-
             </form>
 
             <!-- Alert -->
