@@ -19,40 +19,59 @@
 /* End Fonts */
 
 /* Backgrounds */
-.bg-oxford-blue {
+.escomio-bg-oxford-blue {
     background-color: var(--oxford-blue) !important;
+}
+.escomio-bg-saphire-blue {
+    background-color: var(--saphire-blue) !important;
+}
+.escomio-bg-cyan-process {
+    background-color: var(--cyan-process) !important;
 }
 /* End Backgrounds */
 
 /* Color text */
-.txt-snow {
+.escomio-txt-snow {
     color: var(--snow) !important;
+}
+.escomio-txt-oxford-blue {
+    color: var(--oxford-blue) !important;
+}
+.escomio-txt-saphire-blue {
+    color: var(--saphire-blue) !important;
+}
+.escomio-txt-rich-black {
+    color: var(--rich-black) !important;
 }
 /* End Color text */
 /* END COLORS */
 
-/* GENERALS */
 html, body {
     font-family: "Montserrat-Escomio", sans-serif !important;
     font-size: 1rem;
+    color: var(--rich-black);
 }
 
-.full-w-h-container {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.flex-center-center {
+.escomio-flex-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-/* END GENERALS */
 
-/* COMPONENTS */
-app-welcome {
-    width: 100%;
-    height: 100%;
+.form-control:focus {
+    border-color: var(--saphire-blue) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(1, 103, 151, 0.6) !important;
 }
-/* END COMPONENTS */
 
+.form-check-input:checked {
+    background-color: var(--saphire-blue) !important;
+    border-color: var(--saphire-blue) !important;
+}
+
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+.btn.escomio-bg-saphire-blue:hover {
+    background-color: var(--oxford-blue) !important;
+}
