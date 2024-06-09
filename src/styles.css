@@ -28,6 +28,9 @@
 .escomio-bg-cyan-process {
     background-color: var(--cyan-process) !important;
 }
+.escomio-bg-snow {
+    background-color: var(--snow) !important;
+}
 /* End Backgrounds */
 
 /* Color text */
@@ -114,3 +117,12 @@ html, body {
     height: 100%;
 }
 
+.escomio-link{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.escomio-link:hover {
+    text-decoration: underline;
+    color: var(--oxford-blue) !important;
+}
