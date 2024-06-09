@@ -1,11 +1,10 @@
 <div class="row w-100 h-100" id="login-container">
     <!-- Left panel with logo -->
     <div class="d-none d-sm-none d-lg-flex col-lg-5 h-100 escomio-bg-saphire-blue escomio-flex-center">
-        <div class="escomio-flex-center">
-            <div class="col-11 col-sm-11">
-                <img class="logo-img" src="../../../assets/images/icons/escomio-dark-logo.png" />
-            </div>
-        </div>
+        <app-logo-panel
+            logoSrc="../../../assets/images/icons/escomio-dark-logo.png"
+        >
+        </app-logo-panel>
     </div>
 
     <!-- Right panel with form -->
@@ -82,6 +81,17 @@
                     </div>
                 </div>
             </form>
+
+            <div class="mt-3 text-center">
+                <p> 
+                    ¿No tienes cuenta?
+                    <a 
+                    [routerLink]="['/', createAccountRoute]"
+                    class="escomio-txt-cyan-process escomio-link">
+                        Regístrate
+                    </a>
+                </p>
+            </div>
 
             <!-- Alert -->
             <div *ngIf="hasAlert" class="alert alert-danger d-flex align-items-center mt-4" role="alert">

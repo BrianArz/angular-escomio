@@ -8,11 +8,13 @@ import { ChatLayoutComponent } from './layouts/chat-layout/chat-layout.component
 
 // Common Protocols
 import * as APP from './utils/protocols/common.protocols';
+import { CreateAccountComponent } from './components/create-account/create-account.component';
 
 export const routes: Routes = [
     { path: APP.LOGIN , component: LoginComponent },
     { path: APP.WELCOME , component: WelcomeComponent },
     { path: APP.ESCOMIO , component: ChatLayoutComponent },
+    { path: APP.CREATE_ACCOUNT , component: CreateAccountComponent },
     { path: '', redirectTo: APP.WELCOME, pathMatch: 'full'},
     { path: '**', redirectTo: APP.WELCOME, pathMatch: 'full'},
 ];

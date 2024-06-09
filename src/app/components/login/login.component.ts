@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { Credentials } from '../../models/user/user-credentials';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { HealthService } from './../../services/health/health-service';
 import { AuthService } from '../../services/auth/auth-service';
 import { RasaService } from '../../services/rasa/rasa-service';
+import { LogoPanelComponent } from '../../shared/logo-panel/logo-panel.component';
 
 import * as APP from '../../utils/protocols/common.protocols';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, LogoPanelComponent],
   providers: [AuthService, HealthService, RasaService],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -30,6 +30,8 @@ export class LoginComponent {
 
   hasAlert: boolean = false;  
   responseMessage: string = '';
+
+  createAccountRoute: string = APP.CREATE_ACCOUNT;
 
   constructor(
     private formBuilder: FormBuilder,
