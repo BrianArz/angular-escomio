@@ -20,17 +20,12 @@ import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 })
 export class AuthService {
 
-    //Gets API full url from api protocols
     private apiUri: string = environment.API_DIR + ":" + environment.API_PORT;
 
     constructor(
         private http: HttpClient,
     ) { }
 
-    /**
-     * Logs into api using email and password
-     * @param credentials User email and password
-     */
     public login(credentials: Credentials): Observable<SignInResponse> {
         const url = this.formApiUrl(API.LOGIN)
         return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
@@ -41,11 +36,6 @@ export class AuthService {
         )
     }
 
-    /**
-  * Gets authenticated welcome from server
-  * @param token User access token
-  * @returns Authenticated welcome message
-  */
     public authorizedHelloWorld(): Observable<any> {
         const url = this.formApiUrl(API.AUTHORIZED_HELLO_WORLD)
         return this.http.get<ApiMessageResponse>(url, { withCredentials: true }).pipe(
@@ -53,27 +43,18 @@ export class AuthService {
         );
     }
 
-    /**
-     * Form auth service endpoints complete url
-     * @param endpoint Individual endpoint route
-     * @returns Full url string
-     */
     private formApiUrl(endpoint: string): string {
         return `${this.apiUri}/${endpoint}`;
     }
 
-    /**
-     * Saves token expiration time in local storage
-     * @param expiresIn Token expiration time in seconds
-     */
     public saveExpirationTime(expiresIn: number) {
         localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
     }
 
-    /**
-     * Verifies if local storage has expiration time value
-     * @returns True if there's expiration time
-     */
+    public logout() {
+        localStorage.removeItem(API.EXPIRES_IN);
+    }
+
     public isLogged() {
         const expiresIn = localStorage.getItem(API.EXPIRES_IN);
         return !!expiresIn;
