@@ -1,4 +1,116 @@
-/* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* COLORS */
+:root {
+    --oxford-blue: #0C192A;
+    --saphire-blue: #016797;
+    --cyan-process: #00B0EC;
+    --snow: #FEFAF9;
+    --rich-black: #04090F;
+}
+
+/* Fonts */
+@font-face {
+    font-family: "Montserrat-Escomio-Italic";
+    src: url("../src/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
+}
+@font-face {
+    font-family: "Montserrat-Escomio";
+    src: url("../src/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+}
+/* End Fonts */
+
+/* Backgrounds */
+.escomio-bg-oxford-blue {
+    background-color: var(--oxford-blue) !important;
+}
+.escomio-bg-saphire-blue {
+    background-color: var(--saphire-blue) !important;
+}
+.escomio-bg-cyan-process {
+    background-color: var(--cyan-process) !important;
+}
+/* End Backgrounds */
+
+/* Color text */
+.escomio-txt-snow {
+    color: var(--snow) !important;
+}
+.escomio-txt-oxford-blue {
+    color: var(--oxford-blue) !important;
+}
+.escomio-txt-saphire-blue {
+    color: var(--saphire-blue) !important;
+}
+.escomio-txt-cyan-process {
+    color: var(--cyan-process) !important;
+}
+.escomio-txt-rich-black {
+    color: var(--rich-black) !important;
+}
+/* End Color text */
+/* END COLORS */
+
+html, body {
+    font-family: "Montserrat-Escomio", sans-serif !important;
+    font-size: 1rem;
+    color: var(--rich-black);
+}
+
+.escomio-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-control:focus {
+    border-color: var(--saphire-blue) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(1, 103, 151, 0.6) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--saphire-blue) !important;
+    border-color: var(--saphire-blue) !important;
+}
+
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+.btn.escomio-bg-saphire-blue:hover {
+    background-color: var(--oxford-blue) !important;
+}
+
+.sidebar {
+    width: 0;
+    transition: width 0.25s ease-out;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        width: 15%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .toggled .sidebar {
+        width: 60%;
+    }
+}
+
+.sidebar-toggler-icon {
+    font-size: 2rem;
+}
+
+.flex-grow-1 {
+    overflow-y: auto;
+    height: 100%;
+}
+

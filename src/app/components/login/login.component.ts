@@ -1,104 +1,92 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
-// Modules
 import { Credentials } from '../../models/user/user-credentials';
 import { NavbarComponent } from '../navbar/navbar.component';
-
-// Services
 import { HealthService } from './../../services/health/health-service';
 import { AuthService } from '../../services/auth/auth-service';
 import { RasaService } from '../../services/rasa/rasa-service';
 
+import * as APP from '../../utils/protocols/common.protocols';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NavbarComponent],
+  imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
   providers: [AuthService, HealthService, RasaService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent {
 
-  // Variables
   userLogin: FormGroup;
-  serviceVersion: string = '';
   credentials = {} as Credentials;
-  responseMessage: string = '';
-  idToken: string = '';
-  authorizedReponseMessage = '';
-  testQuestionResponseMessage: string = '';
+  passwordFieldType: string = 'password';
 
-  // Constructor with dependency injections
+  isLoading: boolean = false;
+
+  hasAlert: boolean = false;  
+  responseMessage: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private raseService: RasaService,
+    private router: Router
   ) {
     this.userLogin = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', 
+        [
+          Validators.required, 
+          Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$')
+        ]
+      ],
+      password: ['', 
+        [
+          Validators.required,
+          Validators.minLength(8)
+        ]
+      ]
     });
   }
 
-  /**
-   * Calls login method and handles response
-   */
   login() {
-    this.clearView();
+
+    this.userLogin.markAllAsTouched(); 
+
+    if (this.userLogin.invalid) {
+      return;
+    }
+
+    this.hasAlert = false;
+    this.isLoading = true;
 
     this.credentials.email = this.userLogin.value.email;
     this.credentials.password = this.userLogin.value.password;
 
     this.authService.login(this.credentials).subscribe({
       next: () => {
-        this.responseMessage = 'Login request completed sucessfully. Check console log';
-        this.authorizedWelcome();
+        this.isLoading = false;
+        this.router.navigate([APP.ESCOMIO]);
       },
-      error: () => {
-        this.responseMessage = 'Login request failed!';
+      error: (response) => {
+        this.isLoading = false;
+        this.responseMessage = response.message;
+        this.hasAlert = true;
       }
     })
   }
 
-  /**
-   * Calls authorized hello world endpoint
-   * @param token User access token
-   */
-  authorizedWelcome() {
-    this.authService.authorizedHelloWorld().subscribe({
-      next: (response) => {
-        this.authorizedReponseMessage = response.message;
-        this.testQuestion('Sender1', 'cual es tu funcion?');
-      },
-      error: (error) => {
-        this.authorizedReponseMessage = error.message;
-      }
-    });
+  togglePassword() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
-  /**
-   * Calls test question endpoint
-   * @param token User access token
-   */
-  testQuestion(sender: string, message: string) {
-    this.raseService.testQuestion(sender, message).subscribe({
-      next: (response) => {
-        this.testQuestionResponseMessage = `Rasa Response: ${response.text}`;
-      },
-      error: (error) => {
-        this.testQuestionResponseMessage = error.message;
-      }
-    })
+  get email() {
+    return this.userLogin.get('email');
   }
-
-  /**
-   * Cleans string view variables
-   */
-  clearView() {
-    this.responseMessage = '';
-    this.authorizedReponseMessage = '';
-    this.testQuestionResponseMessage = '';
+  get password() {
+    return this.userLogin.get('password');
   }
 }

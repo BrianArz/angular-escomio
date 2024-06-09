@@ -1,3 +1,4 @@
+import { ApiMessageResponse } from './../../models/api/api-message-response';
 import { HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
 
@@ -10,7 +11,10 @@ export class HttpErrorHandler {
      */
     static handleHttpError( httpError: HttpErrorResponse ) {
         let errorMessage = `An unknown error ocurred. ${httpError.error}`;
-        if ( httpError.error instanceof ErrorEvent )
+        if ( httpError.error && (httpError.error as ApiMessageResponse).message ) {
+            errorMessage = (httpError.error as ApiMessageResponse).message;
+        }
+        else if ( httpError.error && httpError.error instanceof ErrorEvent )
             errorMessage = `Client side or network error: ${httpError.error.message}`;
         else if ( httpError instanceof ProgressEvent ) 
             errorMessage = 'Internal server error';
