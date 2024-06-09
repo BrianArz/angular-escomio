@@ -78,3 +78,39 @@ html, body {
 .btn.escomio-bg-saphire-blue:hover {
     background-color: var(--oxford-blue) !important;
 }
+
+.sidebar {
+    width: 0;
+    transition: width 0.25s ease-out;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .toggled .sidebar {
+        width: 60%;
+    }
+}
+
+.sidebar-toggler-icon {
+    font-size: 2rem;
+}
+
+.flex-grow-1 {
+    overflow-y: auto;
+    height: 100%;
+}
+
