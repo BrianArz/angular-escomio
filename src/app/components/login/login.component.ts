@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Credentials } from '../../models/user/user-credentials';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HealthService } from './../../services/health/health-service';
 import { AuthService } from '../../services/auth/auth-service';
 import { RasaService } from '../../services/rasa/rasa-service';
+
+import * as APP from '../../utils/protocols/common.protocols';
 
 @Component({
   selector: 'app-login',
@@ -25,12 +28,13 @@ export class LoginComponent {
 
   isLoading: boolean = false;
 
-  showAlert: boolean = false;  
+  hasAlert: boolean = false;  
   responseMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.userLogin = this.formBuilder.group({
       email: ['', 
@@ -56,7 +60,7 @@ export class LoginComponent {
       return;
     }
 
-    this.showAlert = false;
+    this.hasAlert = false;
     this.isLoading = true;
 
     this.credentials.email = this.userLogin.value.email;
@@ -65,11 +69,12 @@ export class LoginComponent {
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.isLoading = false;
+        this.router.navigate([APP.ESCOMIO]);
       },
       error: (response) => {
         this.isLoading = false;
         this.responseMessage = response.message;
-        this.showAlert = true;
+        this.hasAlert = true;
       }
     })
   }
