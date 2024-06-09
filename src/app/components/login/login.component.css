@@ -10,3 +10,13 @@
 .logo-img {
     width: 100%;
 }
+
+#create-account-link p a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#create-account-link p a:hover {
+    text-decoration: underline;
+    color: var(--oxford-blue) !important;
+}
