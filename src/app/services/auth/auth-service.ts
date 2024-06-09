@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 // Models imports
 import { Credentials } from '../../models/user/user-credentials';
@@ -52,12 +52,22 @@ export class AuthService {
     }
 
     public logout() {
-        localStorage.removeItem(API.EXPIRES_IN);
+        const url = this.formApiUrl(API.LOGOUT)
+        return this.http.delete(url, { withCredentials: true }).pipe(
+            finalize(() => {
+                this.clearEscomioLocalStorage();
+            })
+        );
     }
 
     public isLogged() {
         const expiresIn = localStorage.getItem(API.EXPIRES_IN);
         return !!expiresIn;
     }
+
+    public clearEscomioLocalStorage() {
+        localStorage.removeItem(API.EXPIRES_IN);
+    }
+
 }
 
