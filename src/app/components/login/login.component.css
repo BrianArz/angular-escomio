@@ -7,10 +7,6 @@
     justify-content: center;
 }
 
-.logo-img {
-    width: 100%;
-}
-
 #create-account-link p a {
     text-decoration: none;
     cursor: pointer;
