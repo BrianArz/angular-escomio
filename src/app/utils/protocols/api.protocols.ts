@@ -1,5 +1,7 @@
 //API localstorage definitions
 export const EXPIRES_IN: string = "escomio_angular_to_python_v1_expires";
+export const ROLE: string = "escomio_angular_to_python_v1_role";
+export const USERNAME: string = "escomio_angular_to_python_v1_username";
 
 //API Auth Endpoints
 export const LOGIN : string = "auth/sign-in";

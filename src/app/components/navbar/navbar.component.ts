@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth/auth-service';
 
 import * as APP from '../../utils/protocols/common.protocols';
+import * as ROLES from '../../utils/protocols/roles.protocols';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +19,9 @@ export class NavbarComponent {
 
   chatRoute: string = APP.ESCOMIO;
 
+  admin: number = ROLES.ADMIN;
+  user: number = ROLES.USER;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -30,6 +34,14 @@ export class NavbarComponent {
 
   get isLogged() {
     return this.authService.isLogged();
+  }
+
+  get username() {
+    return this.authService.getUsername();
+  }
+
+  get role() {
+    return this.authService.getRole();
   }
 
 }

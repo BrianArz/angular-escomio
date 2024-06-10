@@ -11,7 +11,6 @@ import { environment } from '../../../environments/environment';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 
 import * as API from '../../utils/protocols/api.protocols';
-import { error } from 'console';
 
 
 @Injectable({
@@ -29,7 +28,7 @@ export class AuthService {
         const url = this.formApiUrl(API.LOGIN)
         return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
             tap(response => {
-                this.saveExpirationTime(response.expires_in);
+                this.saveUserInfo(response.expires_in, response.role, response.username);
             }),
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
@@ -39,7 +38,7 @@ export class AuthService {
         const url = this.formApiUrl(API.SIGN_UP)
         return this.http.post<SignInResponse>(url, signUpRequest, { withCredentials: true }).pipe(
             tap(response => {
-                this.saveExpirationTime(response.expires_in);
+                this.saveUserInfo(response.expires_in, response.role, response.username);
             }),
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
@@ -56,11 +55,13 @@ export class AuthService {
         return `${this.apiUri}/${endpoint}`;
     }
 
-    public saveExpirationTime(expiresIn: number) {
-        localStorage.setItem(API.EXPIRES_IN, expiresIn.toString());
+    public saveUserInfo(expiresIn: string, role: number, username: string): void {
+        localStorage.setItem(API.EXPIRES_IN, expiresIn);
+        localStorage.setItem(API.ROLE, role.toString());
+        localStorage.setItem(API.USERNAME, username);
     }
 
-    public logout() {
+    public logout(): Observable<any> {
         const url = this.formApiUrl(API.LOGOUT)
         return this.http.delete(url, { withCredentials: true }).pipe(
             finalize(() => {
@@ -69,13 +70,26 @@ export class AuthService {
         );
     }
 
-    public isLogged() {
+    public isLogged(): boolean {
         const expiresIn = localStorage.getItem(API.EXPIRES_IN);
         return !!expiresIn;
     }
 
-    public clearEscomioLocalStorage() {
+    public getRole(): number {
+        const role = localStorage.getItem(API.ROLE);
+        return role ? parseInt(role) : 99;
+    }
+
+    public getUsername(): string {
+        const username = localStorage.getItem(API.USERNAME);
+        return username ? username: "Desconocido";
+    }
+    
+
+    public clearEscomioLocalStorage(): void {
         localStorage.removeItem(API.EXPIRES_IN);
+        localStorage.removeItem(API.ROLE);
+        localStorage.removeItem(API.USERNAME);
     }
 
 }

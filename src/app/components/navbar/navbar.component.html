@@ -14,12 +14,24 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Acerca de</a>
+          <a class="nav-link" aria-current="page" href="#">Acerca de</a>
         </li>
 
         <ng-container *ngIf="isLogged">
           <li class="nav-item">
-            <a [routerLink]="['/', chatRoute]" class="nav-link active">Chats</a>
+            <a [routerLink]="['/', chatRoute]" class="nav-link">Chats</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="role == admin">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Administración</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="role == admin">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Sistema</a>
           </li>
         </ng-container>
 
@@ -38,7 +50,7 @@
           <ng-container *ngIf="isLogged">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                Cuenta
+                {{username}} - Cuenta
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="#">Action</a></li>
