@@ -5,6 +5,7 @@ export const EXPIRES_IN: string = "escomio_angular_to_python_v1_expires";
 export const LOGIN : string = "auth/sign-in";
 export const AUTHORIZED_HELLO_WORLD: string = "auth/authorized-hello-world";
 export const LOGOUT: string = "auth/logout";
+export const SIGN_UP: string = "auth/sign-up"
 
 // API Rasa Endpoints
 export const TEST_QUESTION: string = 'rasa/test-question';

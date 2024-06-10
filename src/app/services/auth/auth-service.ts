@@ -3,17 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
-// Models imports
 import { Credentials } from '../../models/user/user-credentials';
 import { SignInResponse } from '../../models/auth/signin-response';
 import { ApiMessageResponse } from '../../models/api/api-message-response'
-
-// Protocols imports
-import * as API from '../../utils/protocols/api.protocols';
-
-// Utils
+import { SignUpRequest } from '../../models/auth/sign-up-request';
 import { environment } from '../../../environments/environment';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
+
+import * as API from '../../utils/protocols/api.protocols';
+import { error } from 'console';
+
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +28,16 @@ export class AuthService {
     public login(credentials: Credentials): Observable<SignInResponse> {
         const url = this.formApiUrl(API.LOGIN)
         return this.http.post<SignInResponse>(url, credentials, { withCredentials: true }).pipe(
+            tap(response => {
+                this.saveExpirationTime(response.expires_in);
+            }),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        )
+    }
+
+    public signUp(signUpRequest: SignUpRequest): Observable<SignInResponse> {
+        const url = this.formApiUrl(API.SIGN_UP)
+        return this.http.post<SignInResponse>(url, signUpRequest, { withCredentials: true }).pipe(
             tap(response => {
                 this.saveExpirationTime(response.expires_in);
             }),
