@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterModule } from '@angular/router';
 
 import { LogoPanelComponent } from '../../shared/logo-panel/logo-panel.component';
+import { SignUpRequest } from '../../models/auth/sign-up-request';
+import { AuthService } from './../../services/auth/auth-service';
 
 import * as APP from '../../utils/protocols/common.protocols';
 
@@ -17,6 +19,7 @@ import * as APP from '../../utils/protocols/common.protocols';
 export class CreateAccountComponent {
 
   createAccountForm!: FormGroup;
+  signUpRequest = {} as SignUpRequest
 
   passwordFieldType: string = "password";
 
@@ -29,6 +32,8 @@ export class CreateAccountComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.createAccountForm = this.formBuilder.group({
       username: ['', 
@@ -72,7 +77,22 @@ export class CreateAccountComponent {
     this.hasAlert = false;
     this.isLoading = true;
 
-    console.log("test");
+    this.signUpRequest.username = this.createAccountForm.value.username;
+    this.signUpRequest.email = this.createAccountForm.value.email;
+    this.signUpRequest.password = this.createAccountForm.value.password;
+    this.signUpRequest.escom_id = this.createAccountForm.value.escomId;
+
+    this.authService.signUp(this.signUpRequest).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate([APP.ESCOMIO]);
+      },
+      error: (response) => {
+        this.isLoading = false;
+        this.responseMessage = response.message;
+        this.hasAlert = true;
+      }
+    })
   }
 
   togglePassword() {
