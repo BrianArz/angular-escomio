@@ -1,4 +1,6 @@
+import { ApiMessageResponse } from './../../models/api/api-message-response';
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
   selector: 'app-chat-layout',
@@ -8,6 +10,11 @@ import { Component } from '@angular/core';
   styleUrl: './chat-layout.component.css'
 })
 export class ChatLayoutComponent {
+
+  constructor (
+    private authService: AuthService
+  ) {}
+
   hasSidebar = false;
 
   showSidebar() {
@@ -18,5 +25,16 @@ export class ChatLayoutComponent {
     if (window.innerWidth < 768 && this.hasSidebar) {
       this.hasSidebar = false;
     }
+  }
+
+  getAuthorizeMessage() {
+    this.authService.authorizedHelloWorld().subscribe({
+      next: (response) => {
+        console.log(response.message);
+      }, 
+      error: (response) => {
+        console.log(response.message);
+      }
+    })
   }
 }
