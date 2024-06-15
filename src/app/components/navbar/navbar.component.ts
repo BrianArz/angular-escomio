@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../services/auth/auth-service';
+import { RefreshService } from '../../services/refresh/refresh-service';
 
 import * as APP from '../../utils/protocols/common.protocols';
 import * as ROLES from '../../utils/protocols/roles.protocols';
@@ -24,10 +25,12 @@ export class NavbarComponent {
 
   constructor(
     private authService: AuthService,
+    private refreshService: RefreshService,
     private router: Router
   ) {}
 
   logout() {
+    this.refreshService.stop();
     this.authService.logout().subscribe();
     this.router.navigate([APP.WELCOME]);
   }
