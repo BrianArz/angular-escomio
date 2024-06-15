@@ -25,7 +25,7 @@ export class RefreshService {
     start(expiresIn: string) {
         this.stop();
         let timer = parseInt(expiresIn);
-        this.interval = setInterval(() => this.refreshToken(), (timer * 1000) - (59 * 60 * 1000));
+        this.interval = setInterval(() => this.refreshToken(), (timer * 1000) - (10 * 60 * 1000));
     }
 
     stop() {
