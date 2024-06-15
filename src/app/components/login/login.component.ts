@@ -7,6 +7,7 @@ import { Credentials } from '../../models/user/user-credentials';
 import { HealthService } from './../../services/health/health-service';
 import { AuthService } from '../../services/auth/auth-service';
 import { RasaService } from '../../services/rasa/rasa-service';
+import { RefreshService } from '../../services/refresh/refresh-service';
 import { LogoPanelComponent } from '../../shared/logo-panel/logo-panel.component';
 
 import * as APP from '../../utils/protocols/common.protocols';
@@ -36,6 +37,7 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private refreshService: RefreshService,
     private router: Router
   ) {
     this.userLogin = this.formBuilder.group({
@@ -71,6 +73,12 @@ export class LoginComponent {
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.isLoading = false;
+        const expiresInStorage = this.authService.getExpiresIn();
+        if (!expiresInStorage  || !this.authService.isLogged()) {
+          this.responseMessage = "No fue posible iniciar la sesión. Por favor intenta de nuevo.";
+          return;
+        }
+        this.refreshService.start(expiresInStorage);
         this.router.navigate([APP.ESCOMIO]);
       },
       error: (response) => {

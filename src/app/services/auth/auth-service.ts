@@ -85,12 +85,15 @@ export class AuthService {
         return username ? username: "Desconocido";
     }
     
+    public getExpiresIn(): string {
+        const expiresIn = localStorage.getItem(API.EXPIRES_IN);
+        return expiresIn ? expiresIn: "0";
+    }
 
     public clearEscomioLocalStorage(): void {
         localStorage.removeItem(API.EXPIRES_IN);
         localStorage.removeItem(API.ROLE);
         localStorage.removeItem(API.USERNAME);
     }
-
 }
 
