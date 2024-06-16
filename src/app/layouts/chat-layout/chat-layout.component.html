@@ -1,23 +1,27 @@
 
 <div class="w-100 h-100 d-flex flex-column flex-md-row" [class.toggled]="hasSidebar">
-    <div class="sidebar flex-shrink-0 escomio-bg-oxford-blue">
-        
+
+    <!-- Sidebar -->
+    <div class="sidebar flex-shrink-0 escomio-bg-oxford-blue">  
     </div>
 
-
+    <!-- Right Panel -->
     <div class="flex-grow-1 d-flex flex-column">
 
-        <nav class="navbar navbar-expand-lg navbar-light d-md-none px-2">
+        <!-- Chat Nav Options -->
+        <nav class="navbar navbar-expand-lg navbar-light d-md-none py-0 px-2">
             <div (click)="showSidebar()" id="sidebar-toggler">
-                <i class="bi bi-caret-right-fill sidebar-toggler-icon"></i>
+                <i class="bi bi-filter-right sidebar-toggler-icon"></i>
+            </div>
+            <div class="ms-auto">
+                <i class="bi bi-three-dots-vertical sidebar-toggler-icon"></i>
             </div>
         </nav>
 
-        <div class="container-fluid flex-grow-1 d-flex escomio-flex-center"
+        <!-- Chat Panel -->
+        <div class="w-100 flex-grow-1 d-flex escomio-flex-center"
             (click)="closeSidebar()">
-
-            <button (click)="getAuthorizeMessage()" type="button" class="btn btn-primary">Authorize Request</button>
-
+            <app-chat></app-chat>
         </div>
     </div>
 </div>
