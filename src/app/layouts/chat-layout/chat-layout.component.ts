@@ -1,11 +1,11 @@
-import { ApiMessageResponse } from './../../models/api/api-message-response';
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth-service';
+import { ChatComponent } from '../../components/chat/chat.component';
 
 @Component({
   selector: 'app-chat-layout',
   standalone: true,
-  imports: [],
+  imports: [ChatComponent],
   templateUrl: './chat-layout.component.html',
   styleUrl: './chat-layout.component.css'
 })
