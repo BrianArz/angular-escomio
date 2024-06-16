@@ -1,8 +1,33 @@
-
+<!-- app.component.html -->
 <div class="w-100 h-100 d-flex flex-column flex-md-row" [class.toggled]="hasSidebar">
 
     <!-- Sidebar -->
     <div class="sidebar flex-shrink-0 escomio-bg-oxford-blue">  
+        
+        <div class="row escomio-flex-center mt-5">
+            <div class="col-10 col-sm-10">
+                <button class="btn p-3 col-12 col-sm-12 escomio-bg-cyan-process escomio-txt-oxford-blue" (click)="startNewConversation()">
+                    Iniciar conversación
+                </button>
+            </div>
+        </div>
+        
+        <ul class="list-unstyled mt-4">
+            <li *ngFor="let conversation of conversations; let i = index">
+                <div class="row mt-4 escomio-conversation-link escomio-flex-center escomio-txt-small" (click)="selectConversation(i)">
+                    <div class="col-10 col-sm-10 p-3" [ngClass]="{'escomio-active-conversation': activeConversationIndex === i}">
+                        <div class="row escomio-flex-center">
+                            <div class="col-10 col-sm-10 escomio-txt-snow">
+                                {{ conversation.text }}
+                            </div>
+                            <div class="col-1 col-sm-1 escomio-txt-snow">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 
     <!-- Right Panel -->
@@ -19,9 +44,12 @@
         </nav>
 
         <!-- Chat Panel -->
-        <div class="w-100 flex-grow-1 d-flex escomio-flex-center"
-            (click)="closeSidebar()">
-            <app-chat></app-chat>
+        <div class="w-100 flex-grow-1 d-flex escomio-flex-center" (click)="closeSidebar()">
+            <app-chat 
+                [conversationId]="selectedConversationId" 
+                [isNewConversation]="isNewConversation" 
+                (newConversation)="addNewConversation($event)">
+            </app-chat>
         </div>
     </div>
 </div>
