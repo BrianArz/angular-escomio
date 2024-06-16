@@ -1,0 +1,103 @@
+<div id="chat-container" class="w-100 h-100">
+
+    <div id="chats-container">
+
+        <div id="chats-inner-container" class="row escomio-flex-center">
+
+            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9">
+
+                <div class="row d-flex align-items-center message-container p-2">
+                    <div class="col-12 col-sm-12 mb-3">
+                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
+                            ¿Cómo estás hoy, ESCOMIO?
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
+                            Excelete!, listo para ayudarte en lo que necesites.
+                        </div>
+                        <div class="chat-answer-options">
+                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
+                                <i class="me-3 bi bi-clipboard"></i>
+                                <i class="me-3 bi bi-check-circle"></i>
+                                <i class="me-3 bi bi-x-circle"></i>
+                                <i class="me-3 bi bi-send-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex align-items-center message-container p-2">
+                    <div class="col-12 col-sm-12 mb-3">
+                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
+                            ¿Qué tipo de consultas resuelves?
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
+                            Informacion referente al Departamento de Gestión Escolar
+                        </div>
+                        <div class="chat-answer-options">
+                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
+                                <i class="me-3 bi bi-clipboard"></i>
+                                <i class="me-3 bi bi-check-circle"></i>
+                                <i class="me-3 bi bi-x-circle"></i>
+                                <i class="me-3 bi bi-send-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-flex align-items-center message-container p-2">
+                    <div class="col-12 col-sm-12 mb-3">
+                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
+                            ¿Dónde debo entregar mi solicitud de beca?
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
+                            Lo siento pero no puedo responder a esa información no corresponde al Departamento de Gestión Escolar
+                        </div>
+                        <div class="chat-answer-options">
+                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
+                                <i class="me-3 bi bi-clipboard"></i>
+                                <i class="me-3 bi bi-check-circle"></i>
+                                <i class="me-3 bi bi-x-circle"></i>
+                                <i class="me-3 bi bi-send-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="question-input-container" class="d-flex align-items-center">
+        <div class="container-fluid">
+            <div class="col-12 col-sm-12 d-flex justify-content-center">
+                <div class="col-10 col-sm-10">
+                    <div class="form-group">
+                        <textarea
+                            (keydown)="onEnter($event)" 
+                            [(ngModel)]="message"
+                            class="form-control" 
+                            id="question-input" 
+                            rows="1" 
+                            placeholder="Escribe tu pregunta..."
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-1 col-sm-1 d-flex align-items-center ps-2">
+                    <i (click)="sendMessage()" class="bi bi-arrow-right-circle-fill question-input-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+</div>
+
+
+
