@@ -49,6 +49,9 @@
 .escomio-txt-rich-black {
     color: var(--rich-black) !important;
 }
+.escomio-txt-small {
+    font-size: .9rem !important;
+}
 /* End Color text */
 /* END COLORS */
 
