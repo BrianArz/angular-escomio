@@ -6,3 +6,21 @@
     align-items: center;
     justify-content: center;
 }
+
+.escomio-conversation-link {
+    cursor: pointer;
+}
+
+.escomio-conversation-link > div {
+    transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease;;
+}
+
+.escomio-conversation-link:hover > div {
+    background-color: var(--saphire-blue);
+    border-radius: 1rem;
+}
+
+.escomio-active-conversation {
+    background-color: var(--saphire-blue);
+    border-radius: 1rem;
+}

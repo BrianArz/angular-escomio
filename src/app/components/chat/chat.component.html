@@ -1,0 +1,61 @@
+<!-- app-chat.component.html -->
+<div id="chat-container" class="w-100 h-100">
+
+    <div id="chats-container">
+
+        <!-- Inner panel with overflow -->
+        <div  #chatsInnerContainer id="chats-inner-container" class="row escomio-flex-center py-4">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-8 col-xl-6">
+
+                <!-- For each message in conversation -->
+                <div *ngFor="let message of messages" class="row d-flex align-items-center message-container p-2">
+
+                    <!-- Question -->
+                    <div class="col-12 col-sm-12 mb-3">
+                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
+                            {{ message.question }}
+                        </div>
+                    </div>
+
+                    <!-- Answer -->
+                    <div class="col-12 col-sm-12">
+                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
+                            {{ message.answer }}
+                        </div>
+                        <div class="chat-answer-options mt-1">
+                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
+                                <i class="me-3 bi bi-clipboard"></i>
+                                <i class="me-3 bi bi-check-circle"></i>
+                                <i class="me-3 bi bi-x-circle"></i>
+                                <i class="me-3 bi bi-send-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question input -->
+    <div id="question-input-container" class="d-flex align-items-center">
+        <div class="container-fluid">
+            <div class="col-12 col-sm-12 d-flex justify-content-center">
+                <div class="col-10 col-sm-10">
+                    <div class="form-group">
+                        <textarea
+                            (keydown)="onEnter($event)" 
+                            [(ngModel)]="question"
+                            class="form-control" 
+                            id="question-input" 
+                            rows="1" 
+                            placeholder="Escribe tu pregunta..."
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-1 col-sm-1 d-flex align-items-center ps-2">
+                    <i (click)="sendMessage()" class="bi bi-arrow-right-circle-fill question-input-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

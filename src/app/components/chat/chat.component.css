@@ -1,0 +1,73 @@
+:host {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+#chats-container {
+    height: 100%;
+}
+
+#chats-inner-container {
+    max-height: 93%;
+    overflow-y: auto;
+}
+
+#chats-inner-container::-webkit-scrollbar {
+    display: none;
+}
+
+#chats-inner-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#question-input-container {
+    height: 7%;
+    width: 80%;
+    position: fixed;
+    bottom: 0;
+    min-height: 4.5rem;
+    background-color: white;
+    transition: width 0.25s ease-out;
+}
+
+@media (max-width: 767px) {
+    #question-input-container {
+        width: 100%;
+    }
+}
+
+.chat-question,
+.chat-answer {
+    border-radius: 1rem;
+}
+
+.chat-question,
+.chat-answer,
+.chat-answer-options {
+    max-width: 85%;
+}
+
+#chat-question-input {
+    border-radius: 1rem;
+}
+
+.question-input-icon {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#question-input {
+    resize: none;
+    overflow: hidden;
+}
+
+.question-input-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}

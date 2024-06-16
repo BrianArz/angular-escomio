@@ -1,21 +1,37 @@
-import { ApiMessageResponse } from './../../models/api/api-message-response';
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth/auth-service';
+import { ChatComponent } from '../../components/chat/chat.component';
+import { CommonModule } from '@angular/common';
+
+interface Conversation {
+  id: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-chat-layout',
   standalone: true,
-  imports: [],
+  imports: [ChatComponent, CommonModule],
   templateUrl: './chat-layout.component.html',
   styleUrl: './chat-layout.component.css'
 })
 export class ChatLayoutComponent {
 
   constructor (
-    private authService: AuthService
   ) {}
 
   hasSidebar = false;
+
+  activeConversationIndex: number | null = null;
+  selectedConversationId: string | null = null;
+
+  isNewConversation = false;
+
+  conversations = [
+    { id: '1', text: '¿Cómo estás hoy, ESCOM...'},
+    { id: '2', text: '¿Cómo estás hoy, ESCOM...'},
+    { id: '3', text: '¿Cómo estás hoy, ESCOM...'},
+    { id: '4', text: '¿Cómo estás hoy, ESCOM...'}
+  ];
 
   showSidebar() {
     this.hasSidebar = !this.hasSidebar;
@@ -27,14 +43,21 @@ export class ChatLayoutComponent {
     }
   }
 
-  getAuthorizeMessage() {
-    this.authService.authorizedHelloWorld().subscribe({
-      next: (response) => {
-        console.log(response.message);
-      }, 
-      error: (response) => {
-        console.log(response.message);
-      }
-    })
+  selectConversation(index: number) {
+    this.activeConversationIndex = index;
+    this.selectedConversationId = this.conversations[index].id;
+    this.isNewConversation = false;
   }
+
+  startNewConversation() {
+    this.activeConversationIndex = null;
+    this.selectedConversationId = null;
+    this.isNewConversation = true;
+  }
+
+  addNewConversation(conversation: Conversation) {
+    this.conversations.push(conversation);
+    this.selectConversation(this.conversations.length - 1);
+  }
+
 }
