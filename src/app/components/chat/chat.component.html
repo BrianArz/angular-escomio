@@ -1,22 +1,28 @@
+<!-- app-chat.component.html -->
 <div id="chat-container" class="w-100 h-100">
 
     <div id="chats-container">
 
-        <div id="chats-inner-container" class="row escomio-flex-center">
+        <!-- Inner panel with overflow -->
+        <div  #chatsInnerContainer id="chats-inner-container" class="row escomio-flex-center py-4">
+            <div class="col-12 col-sm-12 col-md-11 col-lg-8 col-xl-6">
 
-            <div class="col-12 col-sm-12 col-md-11 col-lg-10 col-xl-9">
+                <!-- For each message in conversation -->
+                <div *ngFor="let message of messages" class="row d-flex align-items-center message-container p-2">
 
-                <div class="row d-flex align-items-center message-container p-2">
+                    <!-- Question -->
                     <div class="col-12 col-sm-12 mb-3">
                         <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
-                            ¿Cómo estás hoy, ESCOMIO?
+                            {{ message.question }}
                         </div>
                     </div>
+
+                    <!-- Answer -->
                     <div class="col-12 col-sm-12">
                         <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
-                            Excelete!, listo para ayudarte en lo que necesites.
+                            {{ message.answer }}
                         </div>
-                        <div class="chat-answer-options">
+                        <div class="chat-answer-options mt-1">
                             <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
                                 <i class="me-3 bi bi-clipboard"></i>
                                 <i class="me-3 bi bi-check-circle"></i>
@@ -26,55 +32,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row d-flex align-items-center message-container p-2">
-                    <div class="col-12 col-sm-12 mb-3">
-                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
-                            ¿Qué tipo de consultas resuelves?
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12">
-                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
-                            Informacion referente al Departamento de Gestión Escolar
-                        </div>
-                        <div class="chat-answer-options">
-                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
-                                <i class="me-3 bi bi-clipboard"></i>
-                                <i class="me-3 bi bi-check-circle"></i>
-                                <i class="me-3 bi bi-x-circle"></i>
-                                <i class="me-3 bi bi-send-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row d-flex align-items-center message-container p-2">
-                    <div class="col-12 col-sm-12 mb-3">
-                        <div class="ms-auto p-3 chat-question escomio-bg-oxford-blue escomio-txt-snow">
-                            ¿Dónde debo entregar mi solicitud de beca?
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12">
-                        <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
-                            Lo siento pero no puedo responder a esa información no corresponde al Departamento de Gestión Escolar
-                        </div>
-                        <div class="chat-answer-options">
-                            <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
-                                <i class="me-3 bi bi-clipboard"></i>
-                                <i class="me-3 bi bi-check-circle"></i>
-                                <i class="me-3 bi bi-x-circle"></i>
-                                <i class="me-3 bi bi-send-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
         </div>
-
     </div>
 
+    <!-- Question input -->
     <div id="question-input-container" class="d-flex align-items-center">
         <div class="container-fluid">
             <div class="col-12 col-sm-12 d-flex justify-content-center">
@@ -82,7 +44,7 @@
                     <div class="form-group">
                         <textarea
                             (keydown)="onEnter($event)" 
-                            [(ngModel)]="message"
+                            [(ngModel)]="question"
                             class="form-control" 
                             id="question-input" 
                             rows="1" 
@@ -96,8 +58,4 @@
             </div>
         </div>
     </div> 
-
 </div>
-
-
-
