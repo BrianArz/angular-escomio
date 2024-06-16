@@ -90,11 +90,11 @@ html, body {
 
 @media (min-width: 768px) {
     .sidebar {
-        width: 15%;
+        width: 20%;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .sidebar {
         position: absolute;
         top: 0;
