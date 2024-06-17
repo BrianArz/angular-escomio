@@ -15,6 +15,7 @@
 #chats-inner-container {
     max-height: 93%;
     overflow-y: auto;
+    padding-bottom: 5rem !important;
 }
 
 #chats-inner-container::-webkit-scrollbar {
