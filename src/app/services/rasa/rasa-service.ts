@@ -7,6 +7,8 @@ import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 
 import { TestQuestionResponse } from '../../models/rasa/test-question-response';
 import { ConversationResponse } from '../../models/rasa/conversation-response';
+import { GetConversationMessagesResponse } from '../../models/rasa/get-conversation-messages-response';
+import { ConversationIdRequest } from '../../models/rasa/conversation-id-request';
 
 import * as API from '../../utils/protocols/api.protocols';
 
@@ -26,6 +28,14 @@ export class RasaService {
         const url = this.formApiUrl(API.GET_CONVERSATIONS)
         return this.http.get<{ conversations: ConversationResponse[] }>(url, { withCredentials: true }).pipe(
             map(response => response.conversations),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        )
+    }
+
+    public getConversationMessages(conversationIdRequest: ConversationIdRequest): Observable<GetConversationMessagesResponse> {
+        const url = this.formApiUrl(API.GET_CONVERSATIONS_MESSAGES);
+        return this.http.post<GetConversationMessagesResponse>(url, conversationIdRequest, { withCredentials: true} ).pipe(
+            map(response => response), 
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
     }
