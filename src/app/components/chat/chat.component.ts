@@ -78,10 +78,9 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   }
 
   sendMessage() {
-    this.isAsking = true;
+    if (this.question.trim()) {
 
-    if (this.question.trim() && !this.isAsking) {
-
+      this.isAsking = true;
       if (this.isNewConversation) {
         const request: QuestionRequest = {
           question: this.question
