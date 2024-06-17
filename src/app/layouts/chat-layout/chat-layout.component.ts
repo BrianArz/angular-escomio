@@ -52,12 +52,14 @@ export class ChatLayoutComponent implements OnInit {
     this.activeConversationIndex = index;
     this.selectedConversationId = this.conversations[index].id;
     this.isNewConversation = false;
+    this.closeSidebar();
   }
 
   startNewConversation() {
     this.activeConversationIndex = null;
     this.selectedConversationId = null;
     this.isNewConversation = true;
+    this.closeSidebar();
   }
 
   addNewConversation(conversation: ConversationResponse) {
