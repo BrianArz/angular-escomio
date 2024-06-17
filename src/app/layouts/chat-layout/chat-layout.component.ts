@@ -1,11 +1,15 @@
-import { ConversationIdRequest } from './../../models/rasa/conversation-id-request';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+import { firstValueFrom } from 'rxjs';
+
+import { ConversationIdRequest } from './../../models/rasa/conversation-id-request';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { RasaService } from '../../services/rasa/rasa-service';
 import { SweetAlertService } from '../../services/sweetalert/sweetalert-service';
 import { ConversationResponse } from './../../models/rasa/conversation-response';
 import { ApiMessageResponse } from '../../models/api/api-message-response';
+import { UpdateNameRequest } from '../../models/rasa/update-name-request';
 
 @Component({
   selector: 'app-chat-layout',
@@ -66,15 +70,11 @@ export class ChatLayoutComponent implements OnInit {
   }
 
   addNewConversation(conversation: ConversationResponse): void {
-    if (this.conversations) {
-      this.conversations.push(conversation);
-      this.selectConversation(this.conversations.length - 1);
-    } else {
-      this.sweetService.error('Conversations array is not initialized');
-    }
+    this.conversations.push(conversation);
+    this.selectConversation(this.conversations.length - 1);
   }
 
-  confirmDeleteConversation(): void {
+  confirmDeleteConversation(conversationId: string | null): void {
     this.sweetService.dangerAlert(
       '¿Estás seguro de querer eliminar la conversación?',
       'Esta acción es irreversible',
@@ -82,7 +82,7 @@ export class ChatLayoutComponent implements OnInit {
       'Cancelar'
     ).then((result) => {
       if (result.isConfirmed) {
-        this.deleteConversation(this.selectedConversationId ?? '');
+        this.deleteConversation(conversationId ?? this.selectedConversationId ?? '');
       }
     });
   }
@@ -113,5 +113,46 @@ export class ChatLayoutComponent implements OnInit {
     this.activeConversationIndex = null;
     this.selectedConversationId = null;
     this.isNewConversation = true;
+  }
+
+  updateConversationName(conversationId: string | null): void {
+    Swal.fire({
+      title: 'Ingresa el nuevo nombre de la conversación',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Actualizar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+      showLoaderOnConfirm: true,
+      customClass: {
+        confirmButton: 'btn escomio-bg-saphire-blue escomio-txt-snow',
+        cancelButton: 'btn escomio-bg-cyan-process escomio-txt-snow'
+      },
+      preConfirm: async (newName) => {
+        const request: UpdateNameRequest = {
+          conversation_id: conversationId ?? this.selectedConversationId ?? '',
+          new_name: newName
+        };
+        try {
+          const response = await firstValueFrom(this.rasaService.updateName(request));
+          if (!response) {
+            Swal.showValidationMessage('User not found');
+          }
+          return response;
+        } catch (error) {
+          Swal.showValidationMessage(`Request failed: ${error}`);
+          return null;
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        this.sweetService.success(result.value.message);
+        this.loadConversations();
+      }
+    });
   }
 }
