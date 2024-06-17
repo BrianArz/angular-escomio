@@ -1,37 +1,36 @@
-import { fileURLToPath } from 'node:url';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-// Models imports
-import { TestQuestionResponse } from '../../models/rasa/test-question-response';
-
-// Protocols imports
-import * as API from '../../utils/protocols/api.protocols';
-
-// Utils
+import { catchError, map} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
+
+import { TestQuestionResponse } from '../../models/rasa/test-question-response';
+import { ConversationResponse } from '../../models/rasa/conversation-response';
+
+import * as API from '../../utils/protocols/api.protocols';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class RasaService {
 
-    //Gets API full url from api protocols
     private apiUri: string = environment.API_DIR + ":" + environment.API_PORT;
 
     constructor(
         private http: HttpClient,
     ) { }
 
-    /**
-     * Gets test question from rasa server
-     * @param token User access token
-     * @returns Test question response object
-     */
-    public testQuestion(sender: string, message: string): Observable<any> {
+    public getConversations(): Observable<ConversationResponse[]> {
+        const url = this.formApiUrl(API.GET_CONVERSATIONS)
+        return this.http.get<{ conversations: ConversationResponse[] }>(url, { withCredentials: true }).pipe(
+            map(response => response.conversations),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        )
+    }
+
+    public askRasa(sender: string, message: string): Observable<any> {
 
         const requestBody = {
             sender: sender,
