@@ -13,6 +13,7 @@ export const REFRESH = "/auth/refresh_token";
 // API Rasa Endpoints
 export const TEST_QUESTION: string = 'rasa/test-question';
 export const GET_CONVERSATIONS: string = 'rasa/get-conversations';
+export const GET_CONVERSATIONS_MESSAGES: string = 'rasa/get-conversation_messages';
 
 // API Health Endpoints
 export const GET_SERVICE_VERSION: string = "health/get-version";
