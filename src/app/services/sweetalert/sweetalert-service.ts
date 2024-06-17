@@ -33,4 +33,20 @@ export class SweetAlertService {
             title: title,
         })
     }
+
+    confirmationAlert(title: string, text: string, confirmButtonTxt: string, cancelButtonText: string):  Promise<any> {
+        return Swal.fire({
+            title: title,
+            text: text,
+            showCancelButton: true,
+            confirmButtonText: confirmButtonTxt,
+            cancelButtonText: cancelButtonText,
+            reverseButtons: true,
+            icon: "info",
+            customClass: {
+                confirmButton: 'btn escomio-bg-saphire-blue escomio-txt-snow',
+                cancelButton: 'btn escomio-bg-cyan-process escomio-txt-snow'
+            }
+        });
+    }
 }
