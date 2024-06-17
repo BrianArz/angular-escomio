@@ -7,7 +7,9 @@ import { GetConversationMessagesResponse } from '../../models/rasa/get-conversat
 import { Message } from '../../models/rasa/get-conversation-messages-response';
 import { ConversationIdRequest } from '../../models/rasa/conversation-id-request';
 import { RasaService } from '../../services/rasa/rasa-service';
-
+import { QuestionRequest } from './../../models/rasa/question-request';
+import { CreateConversationResponse } from '../../models/rasa/create-conversation-response';
+import { AddMessageRequest } from '../../models/rasa/add-message-request';
 
 @Component({
   selector: 'app-chat',
@@ -30,10 +32,10 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   messages: Message[] = [];
   question: string = '';
   isLoading: boolean = false;
+  isAsking: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && this.conversationId) {
-      this.isLoading = true;
       this.loadMessages(this.conversationId);
     } else if (this.isNewConversation) {
       this.messages = [];
@@ -58,7 +60,6 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   }
 
   loadMessages(conversationId: string) {
-
     const request: ConversationIdRequest = {
       conversation_id: conversationId
     }
@@ -66,7 +67,6 @@ export class ChatComponent implements OnChanges, AfterViewInit {
     this.rasaService.getConversationMessages(request).subscribe({
       next: (response: GetConversationMessagesResponse) => {
         this.messages = response.messages;
-        this.isLoading = false;
       },
       error: error => {
 
@@ -76,24 +76,76 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   }
 
   sendMessage() {
-    if (this.question.trim()) {
-      // const newMessage: Message = { asked_question: this.question, question_answer: 'Respuesta simulada.' };
-      // this.messages.push(newMessage);
+    this.isAsking = true;
 
-      // if (this.conversationId) {
-      //   this.question = '';
-      //   setTimeout(() => this.scrollToBottom(), 0);
+    if (this.question.trim() && !this.isAsking) {
 
-      // } else if (this.isNewConversation) {
-      //   const newConversationId = 'new-conversation-id';
-      //   const newConversation: ConversationResponse = { id: newConversationId, name: this.question };
-      //   this.newConversation.emit(newConversation);
-      //   this.conversationId = newConversationId;
-      //   this.messages = [newMessage];
-      //   this.isNewConversation = false;
-      //   this.question = '';
-      //   setTimeout(() => this.scrollToBottom(), 0);
-      // }
+      if (this.isNewConversation) {
+        const request: QuestionRequest = {
+          question: this.question
+        }
+
+        this.rasaService.createConversation(request).subscribe({
+          next: (response: CreateConversationResponse) => {
+
+            const newConvserationId = response.conversation_id;
+            const newConversationName = response.conversation_name;
+            
+            const newConversation: ConversationResponse = { 
+              id: newConvserationId, 
+              name: newConversationName 
+            };
+            this.newConversation.emit(newConversation);
+            
+            const newMessage: Message = {
+              asked_question: this.question,
+              question_answer: response.response,
+              conversation_id: response.conversation_id,
+              message_id: response.message_id,
+              creation_datetime: '',
+              grade: ''
+            };
+            
+            this.messages = [newMessage];
+            this.isNewConversation = false;            
+            this.conversationId = newConvserationId;
+
+            this.question = '';
+            this.isAsking = false;
+            setTimeout(() => this.scrollToBottom(), 0);
+          },   
+          error: error => {
+            this.isAsking = false;
+          }
+        });
+      } else if (this.conversationId) {
+        const request: AddMessageRequest = {
+          conversation_id: this.conversationId ?? '',
+          question: this.question
+        };
+
+        this.rasaService.addMessage(request).subscribe({
+          next: (response: CreateConversationResponse) => {
+
+            const newMessage: Message = { 
+              asked_question: this.question, 
+              question_answer: response.response, 
+              conversation_id: response.conversation_id, 
+              message_id: response.message_id, 
+              creation_datetime: '', 
+              grade: '' 
+            }
+
+            this.messages.push(newMessage);
+            this.question = '';
+            this.isAsking = false;
+            setTimeout(() => this.scrollToBottom(), 0);
+          },
+          error: error => {
+            this.isAsking = false;
+          }
+        });
+      }
     }
   }
 }
