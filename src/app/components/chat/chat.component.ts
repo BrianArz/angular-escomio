@@ -2,15 +2,13 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleCh
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ConversationResponse } from '../../models/rasa/conversation-response';
+
 interface Message {
   question: string;
   answer: string;
 }
 
-interface Conversation {
-  id: string;
-  text: string;
-}
 
 @Component({
   selector: 'app-chat',
@@ -23,7 +21,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
 
   @Input() conversationId: string | null = null;
   @Input() isNewConversation: boolean = false;
-  @Output() newConversation = new EventEmitter<Conversation>();
+  @Output() newConversation = new EventEmitter<ConversationResponse>();
   @ViewChild('chatsInnerContainer') chatsInnerContainer!: ElementRef;
 
   messages: Message[] = [];
@@ -81,7 +79,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
 
       } else if (this.isNewConversation) {
         const newConversationId = 'new-conversation-id';
-        const newConversation: Conversation = { id: newConversationId, text: this.question };
+        const newConversation: ConversationResponse = { id: newConversationId, name: this.question };
         this.newConversation.emit(newConversation);
         this.conversationId = newConversationId;
         this.messages = [newMessage];
