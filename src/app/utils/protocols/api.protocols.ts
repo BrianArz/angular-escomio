@@ -19,6 +19,7 @@ export const ADD_MESSAGE: string = 'rasa/add-message-to-conversation';
 export const UPDATE_MESSAGE_GRADE: string = 'rasa/update-message-grade';
 export const SUGGEST_BY_CHAT: string = 'rasa/suggest-by-chat';
 export const DELETE_CONVERSATION: string = 'rasa/delete-conversation';
+export const UPDATE_NAME = 'rasa/update-conversation-name';
 
 // API Health Endpoints
 export const GET_SERVICE_VERSION: string = "health/get-version";
