@@ -16,6 +16,7 @@ import { ApiMessageResponse } from '../../models/api/api-message-response';
 import { SuggestByChatRequest } from '../../models/rasa/suggest-by-chat-request';
 
 import * as API from '../../utils/protocols/api.protocols';
+import { UpdateNameRequest } from '../../models/rasa/update-name-request';
 
 @Injectable({
     providedIn: 'root'
@@ -83,6 +84,14 @@ export class RasaService {
             catchError(error => HttpErrorHandler.handleHttpError(error))
         );
     }   
+
+    public updateName(updateNameRequest: UpdateNameRequest): Observable<ApiMessageResponse> {
+        const url = this.formApiUrl(API.UPDATE_NAME);
+        return this.http.put<ApiMessageResponse>(url, updateNameRequest, { withCredentials: true }).pipe(
+            map(response => response),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        )
+    }
 
     private formApiUrl(endpoint: string): string{
         return `${this.apiUri}/${endpoint}`;
