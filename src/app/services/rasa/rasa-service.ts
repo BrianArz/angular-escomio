@@ -5,10 +5,12 @@ import { catchError, map} from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HttpErrorHandler } from '../../utils/handlers/http-error-handler';
 
-import { TestQuestionResponse } from '../../models/rasa/test-question-response';
 import { ConversationResponse } from '../../models/rasa/conversation-response';
 import { GetConversationMessagesResponse } from '../../models/rasa/get-conversation-messages-response';
 import { ConversationIdRequest } from '../../models/rasa/conversation-id-request';
+import { QuestionRequest } from '../../models/rasa/question-request';
+import { CreateConversationResponse } from '../../models/rasa/create-conversation-response';
+import { AddMessageRequest } from '../../models/rasa/add-message-request';
 
 import * as API from '../../utils/protocols/api.protocols';
 
@@ -40,16 +42,18 @@ export class RasaService {
         )
     }
 
-    public askRasa(sender: string, message: string): Observable<any> {
+    public createConversation(questionRequest: QuestionRequest): Observable<CreateConversationResponse> {
+        const url = this.formApiUrl(API.CREATE_CONVERSATION);
+        return this.http.post<CreateConversationResponse>(url, questionRequest, { withCredentials: true }).pipe(
+            map(response => response),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        )
+    }
 
-        const requestBody = {
-            sender: sender,
-            message: message
-        }
-
-
-        const url = this.formApiUrl(API.TEST_QUESTION)
-        return this.http.post<TestQuestionResponse>(url, requestBody, { withCredentials: true }).pipe(
+    public addMessage(addMessageRequest: AddMessageRequest): Observable<CreateConversationResponse> {
+        const url = this.formApiUrl(API.ADD_MESSAGE);
+        return this.http.put<CreateConversationResponse>(url, addMessageRequest, { withCredentials: true }).pipe(
+            map(response => response),
             catchError(error => HttpErrorHandler.handleHttpError(error))
         )
     }
