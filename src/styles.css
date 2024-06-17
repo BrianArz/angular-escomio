@@ -12,50 +12,63 @@
     font-family: "Montserrat-Escomio-Italic";
     src: url("../src/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf");
 }
+
 @font-face {
     font-family: "Montserrat-Escomio";
     src: url("../src/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
 }
+
 /* End Fonts */
 
 /* Backgrounds */
 .escomio-bg-oxford-blue {
     background-color: var(--oxford-blue) !important;
 }
+
 .escomio-bg-saphire-blue {
     background-color: var(--saphire-blue) !important;
 }
+
 .escomio-bg-cyan-process {
     background-color: var(--cyan-process) !important;
 }
+
 .escomio-bg-snow {
     background-color: var(--snow) !important;
 }
+
 /* End Backgrounds */
 
 /* Color text */
 .escomio-txt-snow {
     color: var(--snow) !important;
 }
+
 .escomio-txt-oxford-blue {
     color: var(--oxford-blue) !important;
 }
+
 .escomio-txt-saphire-blue {
     color: var(--saphire-blue) !important;
 }
+
 .escomio-txt-cyan-process {
     color: var(--cyan-process) !important;
 }
+
 .escomio-txt-rich-black {
     color: var(--rich-black) !important;
 }
+
 .escomio-txt-small {
     font-size: .9rem !important;
 }
+
 /* End Color text */
 /* END COLORS */
 
-html, body {
+html,
+body {
     font-family: "Montserrat-Escomio", sans-serif !important;
     font-size: 1rem;
     color: var(--rich-black);
@@ -120,7 +133,7 @@ html, body {
     height: 100%;
 }
 
-.escomio-link{
+.escomio-link {
     text-decoration: none;
     cursor: pointer;
 }
@@ -128,4 +141,24 @@ html, body {
 .escomio-link:hover {
     text-decoration: underline;
     color: var(--oxford-blue) !important;
+}
+
+.colored-toast.swal2-icon-success {
+    background-color: #00B0EC !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #f27474 !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-html-container {
+    color: white;
 }

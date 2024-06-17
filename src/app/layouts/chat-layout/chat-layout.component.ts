@@ -1,3 +1,4 @@
+import { SweetAlertService } from './../../services/sweetalert/sweetalert-service';
 import { Component, OnInit } from '@angular/core';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,10 @@ import { RasaService } from '../../services/rasa/rasa-service';
 })
 export class ChatLayoutComponent implements OnInit {
 
-  constructor(private rasaService: RasaService) {}
+  constructor(
+    private rasaService: RasaService,
+    private sweetService: SweetAlertService
+  ) {}
 
   hasSidebar = false;
 
@@ -33,10 +37,12 @@ export class ChatLayoutComponent implements OnInit {
     this.rasaService.getConversations().subscribe({
       next: (conversations: ConversationResponse[]) => {
         this.conversations = conversations;
-      }
+      },
+      error: error => {
+        this.sweetService.error(error);
+      } 
     });
   }
-
 
   showSidebar() {
     this.hasSidebar = !this.hasSidebar;

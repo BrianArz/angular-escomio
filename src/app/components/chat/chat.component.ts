@@ -10,6 +10,7 @@ import { RasaService } from '../../services/rasa/rasa-service';
 import { QuestionRequest } from './../../models/rasa/question-request';
 import { CreateConversationResponse } from '../../models/rasa/create-conversation-response';
 import { AddMessageRequest } from '../../models/rasa/add-message-request';
+import { SweetAlertService } from '../../services/sweetalert/sweetalert-service';
 
 @Component({
   selector: 'app-chat',
@@ -21,7 +22,8 @@ import { AddMessageRequest } from '../../models/rasa/add-message-request';
 export class ChatComponent implements OnChanges, AfterViewInit {
 
   constructor(
-    private rasaService: RasaService
+    private rasaService: RasaService,
+    private sweetService: SweetAlertService
   ) {}
 
   @Input() conversationId: string | null = null;
@@ -69,17 +71,16 @@ export class ChatComponent implements OnChanges, AfterViewInit {
         this.messages = response.messages;
       },
       error: error => {
-
+        this.sweetService.error(error);
       }
     });
     setTimeout(() => this.scrollToBottom(), 0);
   }
 
   sendMessage() {
-    this.isAsking = true;
+    if (this.question.trim()) {
 
-    if (this.question.trim() && !this.isAsking) {
-
+      this.isAsking = true;
       if (this.isNewConversation) {
         const request: QuestionRequest = {
           question: this.question
@@ -116,6 +117,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
           },   
           error: error => {
             this.isAsking = false;
+            this.sweetService.error(error);
           }
         });
       } else if (this.conversationId) {
@@ -143,6 +145,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
           },
           error: error => {
             this.isAsking = false;
+            this.sweetService.error(error);
           }
         });
       }
