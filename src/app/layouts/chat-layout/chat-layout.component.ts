@@ -1,23 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CommonModule } from '@angular/common';
 
-interface Conversation {
-  id: string;
-  text: string;
-}
+import { ConversationResponse } from './../../models/rasa/conversation-response';
+import { RasaService } from '../../services/rasa/rasa-service';
 
 @Component({
   selector: 'app-chat-layout',
   standalone: true,
   imports: [ChatComponent, CommonModule],
   templateUrl: './chat-layout.component.html',
-  styleUrl: './chat-layout.component.css'
+  styleUrls: ['./chat-layout.component.css']
 })
-export class ChatLayoutComponent {
+export class ChatLayoutComponent implements OnInit {
 
-  constructor (
-  ) {}
+  constructor(private rasaService: RasaService) {}
 
   hasSidebar = false;
 
@@ -26,12 +23,20 @@ export class ChatLayoutComponent {
 
   isNewConversation = false;
 
-  conversations = [
-    { id: '1', text: '¿Cómo estás hoy, ESCOM...'},
-    { id: '2', text: '¿Cómo estás hoy, ESCOM...'},
-    { id: '3', text: '¿Cómo estás hoy, ESCOM...'},
-    { id: '4', text: '¿Cómo estás hoy, ESCOM...'}
-  ];
+  conversations: ConversationResponse[] = [];
+
+  ngOnInit(): void {
+    this.loadConversations();
+  }
+
+  loadConversations() {
+    this.rasaService.getConversations().subscribe({
+      next: (conversations: ConversationResponse[]) => {
+        this.conversations = conversations;
+      }
+    });
+  }
+
 
   showSidebar() {
     this.hasSidebar = !this.hasSidebar;
@@ -55,9 +60,8 @@ export class ChatLayoutComponent {
     this.isNewConversation = true;
   }
 
-  addNewConversation(conversation: Conversation) {
+  addNewConversation(conversation: ConversationResponse) {
     this.conversations.push(conversation);
     this.selectConversation(this.conversations.length - 1);
   }
-
 }
