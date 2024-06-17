@@ -27,6 +27,10 @@
     scrollbar-width: none;
 }
 
+.chat-answer-options-icon {
+    cursor: pointer;
+}
+
 #question-input-container {
     height: 7%;
     width: 80%;

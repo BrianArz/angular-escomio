@@ -162,3 +162,6 @@ body {
 .colored-toast .swal2-html-container {
     color: white;
 }
+.swal2-container{
+    min-width: 50% !important;
+}
