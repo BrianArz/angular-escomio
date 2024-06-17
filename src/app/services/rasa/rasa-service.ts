@@ -33,7 +33,7 @@ export class RasaService {
         return this.http.get<{ conversations: ConversationResponse[] }>(url, { withCredentials: true }).pipe(
             map(response => response.conversations),
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
 
     public getConversationMessages(conversationIdRequest: ConversationIdRequest): Observable<GetConversationMessagesResponse> {
@@ -41,7 +41,7 @@ export class RasaService {
         return this.http.post<GetConversationMessagesResponse>(url, conversationIdRequest, { withCredentials: true} ).pipe(
             map(response => response), 
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
 
     public createConversation(questionRequest: QuestionRequest): Observable<CreateConversationResponse> {
@@ -49,7 +49,7 @@ export class RasaService {
         return this.http.post<CreateConversationResponse>(url, questionRequest, { withCredentials: true }).pipe(
             map(response => response),
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
 
     public addMessage(addMessageRequest: AddMessageRequest): Observable<CreateConversationResponse> {
@@ -57,7 +57,7 @@ export class RasaService {
         return this.http.put<CreateConversationResponse>(url, addMessageRequest, { withCredentials: true }).pipe(
             map(response => response),
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
 
     public updateMessageGrade(updateMessageGradeRequest: UpdateMessageGradeRequest): Observable<ApiMessageResponse> {
@@ -65,7 +65,7 @@ export class RasaService {
         return this.http.put<ApiMessageResponse>(url, updateMessageGradeRequest, { withCredentials: true }).pipe(
             map(response => response),
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
 
     public suggestByChat(suggetByChatRequest: SuggestByChatRequest): Observable<ApiMessageResponse> {
@@ -73,8 +73,16 @@ export class RasaService {
         return this.http.post<ApiMessageResponse>(url, suggetByChatRequest, { withCredentials: true }).pipe(
             map(response => response),
             catchError(error => HttpErrorHandler.handleHttpError(error))
-        )
+        );
     }
+
+    public deleteConversation(conversationIdRequest: ConversationIdRequest): Observable<ApiMessageResponse> {
+        const url = this.formApiUrl(API.DELETE_CONVERSATION);
+        return this.http.put<ApiMessageResponse>(url, conversationIdRequest, {withCredentials: true}).pipe(
+            map(response => response),
+            catchError(error => HttpErrorHandler.handleHttpError(error))
+        );
+    }   
 
     private formApiUrl(endpoint: string): string{
         return `${this.apiUri}/${endpoint}`;
