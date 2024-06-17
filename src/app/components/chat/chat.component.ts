@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ConversationResponse } from '../../models/rasa/conversation-response';
-
-interface Message {
-  question: string;
-  answer: string;
-}
+import { GetConversationMessagesResponse } from '../../models/rasa/get-conversation-messages-response';
+import { Message } from '../../models/rasa/get-conversation-messages-response';
+import { ConversationIdRequest } from '../../models/rasa/conversation-id-request';
+import { RasaService } from '../../services/rasa/rasa-service';
 
 
 @Component({
@@ -19,6 +18,10 @@ interface Message {
 })
 export class ChatComponent implements OnChanges, AfterViewInit {
 
+  constructor(
+    private rasaService: RasaService
+  ) {}
+
   @Input() conversationId: string | null = null;
   @Input() isNewConversation: boolean = false;
   @Output() newConversation = new EventEmitter<ConversationResponse>();
@@ -26,9 +29,11 @@ export class ChatComponent implements OnChanges, AfterViewInit {
 
   messages: Message[] = [];
   question: string = '';
+  isLoading: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['conversationId'] && this.conversationId) {
+      this.isLoading = true;
       this.loadMessages(this.conversationId);
     } else if (this.isNewConversation) {
       this.messages = [];
@@ -53,40 +58,42 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   }
 
   loadMessages(conversationId: string) {
-    const simulatedMessages: Message[] = [
-      { question: '¿Cómo estás hoy, ESCOMIO?', answer: '¡Excelente! Listo para ayudarte en lo que necesites.' },
-      { question: '¿Qué tipo de consultas resuelves?', answer: 'Información referente al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
-      { question: '¿Dónde debo entregar mi solicitud de beca?', answer: 'Lo siento, pero no puedo responder a esa información; no corresponde al Departamento de Gestión Escolar.' },
 
-    ];
-    this.messages = simulatedMessages;
+    const request: ConversationIdRequest = {
+      conversation_id: conversationId
+    }
+
+    this.rasaService.getConversationMessages(request).subscribe({
+      next: (response: GetConversationMessagesResponse) => {
+        this.messages = response.messages;
+        this.isLoading = false;
+      },
+      error: error => {
+
+      }
+    });
     setTimeout(() => this.scrollToBottom(), 0);
   }
 
   sendMessage() {
     if (this.question.trim()) {
-      const newMessage: Message = { question: this.question, answer: 'Respuesta simulada.' };
-      this.messages.push(newMessage);
+      // const newMessage: Message = { asked_question: this.question, question_answer: 'Respuesta simulada.' };
+      // this.messages.push(newMessage);
 
-      if (this.conversationId) {
-        this.question = '';
-        setTimeout(() => this.scrollToBottom(), 0);
+      // if (this.conversationId) {
+      //   this.question = '';
+      //   setTimeout(() => this.scrollToBottom(), 0);
 
-      } else if (this.isNewConversation) {
-        const newConversationId = 'new-conversation-id';
-        const newConversation: ConversationResponse = { id: newConversationId, name: this.question };
-        this.newConversation.emit(newConversation);
-        this.conversationId = newConversationId;
-        this.messages = [newMessage];
-        this.isNewConversation = false;
-        this.question = '';
-        setTimeout(() => this.scrollToBottom(), 0);
-      }
+      // } else if (this.isNewConversation) {
+      //   const newConversationId = 'new-conversation-id';
+      //   const newConversation: ConversationResponse = { id: newConversationId, name: this.question };
+      //   this.newConversation.emit(newConversation);
+      //   this.conversationId = newConversationId;
+      //   this.messages = [newMessage];
+      //   this.isNewConversation = false;
+      //   this.question = '';
+      //   setTimeout(() => this.scrollToBottom(), 0);
+      // }
     }
   }
 }
