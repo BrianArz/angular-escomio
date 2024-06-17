@@ -15,8 +15,7 @@
 
         <ul class="list-unstyled mt-4">
             <li *ngFor="let conversation of conversations; let i = index">
-                <div class="row mt-2 escomio-conversation-link escomio-flex-center escomio-txt-small"
-                    (click)="selectConversation(i)">
+                <div (click)="selectConversation(i)" class="row mt-2 escomio-conversation-link escomio-flex-center escomio-txt-small">
                     <div class="col-10 col-sm-10 p-3"
                         [ngClass]="{'escomio-active-conversation': activeConversationIndex === i}">
                         <div class="row escomio-flex-center">
@@ -26,8 +25,8 @@
                             <div class="d-none d-sm-none d-md-block col-1 col-sm-1 escomio-txt-snow">
                                 <i class="bi bi-three-dots-vertical" data-bs-toggle="dropdown"></i>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li (click)="confirmDeleteConversation()"><a class="dropdown-item">Eliminar conversación</a></li>
+                                    <li (click)="updateConversationName(conversation.id)"><a class="dropdown-item">Editar nombre</a></li>
+                                    <li (click)="confirmDeleteConversation(conversation.id)"><a class="dropdown-item">Eliminar conversación</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -45,11 +44,11 @@
             <div (click)="toggleSidebar()" id="sidebar-toggler">
                 <i class="bi bi-filter-right sidebar-toggler-icon"></i>
             </div>
-            <div class="ms-auto">
+            <div *ngIf="selectedConversationId" class="ms-auto">
                 <i class="bi bi-three-dots-vertical sidebar-toggler-icon" data-bs-toggle="dropdown"></i>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li (click)="confirmDeleteConversation()"><a class="dropdown-item">Eliminar conversación</a></li>
+                    <li (click)="updateConversationName(null)"><a class="dropdown-item">Editar nombre</a></li>
+                    <li (click)="confirmDeleteConversation(null)"><a class="dropdown-item">Eliminar conversación</a></li>
                 </ul>
             </div>
         </nav>
