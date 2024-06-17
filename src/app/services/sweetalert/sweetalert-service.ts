@@ -10,7 +10,7 @@ export class SweetAlertService {
 
     Toast = Swal.mixin({
         toast: true,
-        position: 'top',
+        position: 'top-end',
         iconColor: 'white',
         customClass: {
             popup: 'colored-toast',
@@ -43,6 +43,23 @@ export class SweetAlertService {
             cancelButtonText: cancelButtonText,
             reverseButtons: true,
             icon: "info",
+            customClass: {
+                confirmButton: 'btn escomio-bg-saphire-blue escomio-txt-snow',
+                cancelButton: 'btn escomio-bg-cyan-process escomio-txt-snow'
+            }
+        });
+    }
+
+    dangerAlert(title: string, text: string, confirmButtonTxt: string, cancelButtonText: string):  Promise<any> {
+        return Swal.fire({
+            title: title,
+            text: text,
+            showCancelButton: true,
+            confirmButtonText: confirmButtonTxt,
+            cancelButtonText: cancelButtonText,
+            reverseButtons: true,
+            icon: "warning",
+            iconColor: "#0C192A",
             customClass: {
                 confirmButton: 'btn escomio-bg-saphire-blue escomio-txt-snow',
                 cancelButton: 'btn escomio-bg-cyan-process escomio-txt-snow'
