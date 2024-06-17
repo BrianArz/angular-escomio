@@ -28,12 +28,11 @@
                         <div class="me-auto p-3 chat-answer escomio-bg-saphire-blue escomio-txt-snow">
                             {{ message.question_answer }}
                         </div>
-                        <div class="chat-answer-options mt-1">
+                        <div *ngIf="showAnswerOptions[message.message_id]" class="chat-answer-options mt-1">
                             <div class="d-flex justify-content-end ps-3 chat-answer-options-icons">
-                                <i class="me-3 bi bi-clipboard"></i>
-                                <i class="me-3 bi bi-check-circle"></i>
-                                <i class="me-3 bi bi-x-circle"></i>
-                                <i class="me-3 bi bi-send-plus"></i>
+                                <i (click)="reportAnswer(message.message_id, '1')" class="me-3 bi bi-check-circle chat-answer-options-icon"  data-bs-toggle="tooltip" title="Buena respuesta!"></i>
+                                <i (click)="reportAnswer(message.message_id, '2')" class="me-3 bi bi-x-circle chat-answer-options-icon" data-bs-toggle="tooltip" title="Mala respuesta!"></i>
+                                <i (click)="suggestTrainingAlert(message.message_id)" class="me-3 bi bi-send-plus chat-answer-options-icon" data-bs-toggle="tooltip" title="Sugerir entrenamiento"></i>
                             </div>
                         </div>
                     </div>
