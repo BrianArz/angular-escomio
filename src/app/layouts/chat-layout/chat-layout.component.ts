@@ -1,10 +1,9 @@
-import { SweetAlertService } from './../../services/sweetalert/sweetalert-service';
 import { Component, OnInit } from '@angular/core';
-import { ChatComponent } from '../../components/chat/chat.component';
 import { CommonModule } from '@angular/common';
-
-import { ConversationResponse } from './../../models/rasa/conversation-response';
+import { ChatComponent } from '../../components/chat/chat.component';
 import { RasaService } from '../../services/rasa/rasa-service';
+import { SweetAlertService } from '../../services/sweetalert/sweetalert-service';
+import { ConversationResponse } from './../../models/rasa/conversation-response';
 
 @Component({
   selector: 'app-chat-layout',
@@ -36,7 +35,7 @@ export class ChatLayoutComponent implements OnInit {
   loadConversations() {
     this.rasaService.getConversations().subscribe({
       next: (conversations: ConversationResponse[]) => {
-        this.conversations = conversations;
+        this.conversations = conversations || [];
       },
       error: error => {
         this.sweetService.error(error);
@@ -56,7 +55,7 @@ export class ChatLayoutComponent implements OnInit {
 
   selectConversation(index: number) {
     this.activeConversationIndex = index;
-    this.selectedConversationId = this.conversations[index].id;
+    this.selectedConversationId = this.conversations[index]?.id ?? null;
     this.isNewConversation = false;
     this.closeSidebar();
   }
@@ -69,7 +68,11 @@ export class ChatLayoutComponent implements OnInit {
   }
 
   addNewConversation(conversation: ConversationResponse) {
-    this.conversations.push(conversation);
-    this.selectConversation(this.conversations.length - 1);
+    if (this.conversations) {
+      this.conversations.push(conversation);
+      this.selectConversation(this.conversations.length - 1);
+    } else {
+      console.error('Conversations array is not initialized');
+    }
   }
 }
