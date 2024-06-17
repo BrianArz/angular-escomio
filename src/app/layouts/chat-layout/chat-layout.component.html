@@ -14,11 +14,11 @@
         
         <ul class="list-unstyled mt-4">
             <li *ngFor="let conversation of conversations; let i = index">
-                <div class="row mt-4 escomio-conversation-link escomio-flex-center escomio-txt-small" (click)="selectConversation(i)">
+                <div class="row mt-2 escomio-conversation-link escomio-flex-center escomio-txt-small" (click)="selectConversation(i)">
                     <div class="col-10 col-sm-10 p-3" [ngClass]="{'escomio-active-conversation': activeConversationIndex === i}">
                         <div class="row escomio-flex-center">
                             <div class="col-10 col-sm-10 escomio-txt-snow">
-                                {{ conversation.text }}
+                                {{ conversation.name }}
                             </div>
                             <div class="col-1 col-sm-1 escomio-txt-snow">
                                 <i class="bi bi-three-dots-vertical"></i>
