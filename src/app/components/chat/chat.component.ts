@@ -141,6 +141,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
       },
       error: error => {
         this.isAsking = false;
+        this.resetQuestionInput();
         this.sweetService.error(error);
       }
     });
@@ -170,6 +171,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
       },
       error: error => {
         this.isAsking = false;
+        this.resetQuestionInput();
         this.sweetService.error(error);
       }
     });
