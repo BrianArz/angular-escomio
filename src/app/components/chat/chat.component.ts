@@ -59,13 +59,13 @@ export class ChatComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.scrollToBottom();
-  }
-
-  private scrollToBottom(): void {
     if (this.chatsInnerContainer) {
       this.chatsInnerContainer.nativeElement.scrollTop = this.chatsInnerContainer.nativeElement.scrollHeight;
     }
+  }
+
+  private scrollToBottom(): void {
+    this.chatsInnerContainer.nativeElement.scrollTop = this.chatsInnerContainer.nativeElement.scrollHeight;
   }
 
   onEnter(event: KeyboardEvent): void {
@@ -82,12 +82,12 @@ export class ChatComponent implements OnChanges, AfterViewInit {
       next: (response: GetConversationMessagesResponse) => {
         this.messages = response.messages;
         this.initializeShowAnswerOptions();
+        setTimeout(() => this.scrollToBottom(), 0);
       },
       error: error => {
         this.sweetService.error(error);
       }
     });
-    setTimeout(() => this.scrollToBottom(), 0);
   }
 
   private initializeShowAnswerOptions(): void {
@@ -137,7 +137,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
         this.conversationId = response.conversation_id;
         this.updateShowAnswerOptions(newMessage);
         this.resetQuestionInput();
-        this.scrollToBottom();
+        setTimeout(() => this.scrollToBottom(), 0);
       },
       error: error => {
         this.isAsking = false;
@@ -167,7 +167,7 @@ export class ChatComponent implements OnChanges, AfterViewInit {
         this.messages.push(newMessage);
         this.updateShowAnswerOptions(newMessage);
         this.resetQuestionInput();
-        this.scrollToBottom();
+        setTimeout(() => this.scrollToBottom(), 0);
       },
       error: error => {
         this.isAsking = false;
