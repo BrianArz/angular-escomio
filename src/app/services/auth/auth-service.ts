@@ -75,6 +75,10 @@ export class AuthService {
         return !!expiresIn;
     }
 
+    public isAdmin(): boolean {
+        return this.getRole() === 0;
+    }
+
     public getRole(): number {
         const role = localStorage.getItem(API.ROLE);
         return role ? parseInt(role) : 99;
@@ -82,12 +86,12 @@ export class AuthService {
 
     public getUsername(): string {
         const username = localStorage.getItem(API.USERNAME);
-        return username ? username: "Desconocido";
+        return username ? username : "Desconocido";
     }
-    
+
     public getExpiresIn(): string {
         const expiresIn = localStorage.getItem(API.EXPIRES_IN);
-        return expiresIn ? expiresIn: "0";
+        return expiresIn ? expiresIn : "0";
     }
 
     public clearEscomioLocalStorage(): void {
