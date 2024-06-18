@@ -19,6 +19,7 @@ import * as ROLES from '../../utils/protocols/roles.protocols';
 export class NavbarComponent {
 
   chatRoute: string = APP.ESCOMIO;
+  aboutRoute: string = APP.ABOUT;
 
   admin: number = ROLES.ADMIN;
   user: number = ROLES.USER;
@@ -32,7 +33,8 @@ export class NavbarComponent {
   logout() {
     this.refreshService.stop();
     this.authService.logout().subscribe();
-    this.router.navigate([APP.WELCOME]);
+    this.authService.clearEscomioLocalStorage();
+    this.router.navigate([APP.ABOUT]);
   }
 
   get isLogged() {

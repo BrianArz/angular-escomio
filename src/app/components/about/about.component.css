@@ -1,0 +1,28 @@
+:host {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.escomio-section-image > div > img {
+    width: 100%;
+    max-width: 20rem;
+}
+
+.escomio-section {
+    min-height: 50%;
+}
+
+.escomio-footer-logo {
+    max-width: 40rem;
+    width: 100%;
+}
+
+.escomio-footer-header {
+    max-width: 30rem;
+    width: 100%;
+}
