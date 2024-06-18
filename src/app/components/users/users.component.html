@@ -1,0 +1,33 @@
+<div class="table-container p-5">
+
+    <div class="row mb-5">
+        <span class="h1">Lista de usuarios</span>
+    </div>
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border escomio-txt-oxford-blue" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <table *ngIf="!isLoading" datatable [dtOptions]="dtoptions" class="display">
+        <thead>
+            <tr>
+                <th>Boleta</th>
+                <th>Uid UID</th>
+                <th>Estado</th>
+                <th>Rol</th>
+                <th>Nombre de usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.escom_id }}</td>
+                <td>{{ user.firebase_uid }}</td>
+                <td>{{ user.is_active }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.username }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

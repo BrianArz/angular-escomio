@@ -21,6 +21,11 @@ export const SUGGEST_BY_CHAT: string = 'rasa/suggest-by-chat';
 export const DELETE_CONVERSATION: string = 'rasa/delete-conversation';
 export const UPDATE_NAME = 'rasa/update-conversation-name';
 
+// API Admin Endpoints
+export const GET_USERS = 'admin/get-users';
+export const GET_MESSAGES = 'admin/get-messages';
+export const GET_SUGGESTIONS = 'admin/get-suggestions'
+
 // API Health Endpoints
 export const GET_SERVICE_VERSION: string = "health/get-version";
 

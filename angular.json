@@ -28,12 +28,15 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "node_modules/sweetalert2/dist/sweetalert2.min.css"
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
+              "node_modules/datatables.net-dt/css/dataTables.dataTables.min.css"
             ],
             "scripts": [
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/sweetalert2/dist/sweetalert2.min.js"
+              "node_modules/sweetalert2/dist/sweetalert2.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/dataTables.min.js"        
             ],
             "fileReplacements": [],
             "server": "src/main.server.ts",
@@ -122,7 +125,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"            
+              "src/styles.css"
             ],
             "scripts": []
           }

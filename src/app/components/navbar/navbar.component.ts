@@ -20,6 +20,10 @@ export class NavbarComponent {
 
   chatRoute: string = APP.ESCOMIO;
   aboutRoute: string = APP.ABOUT;
+  usersRoute: string = APP.USERS;
+  messagesRoute: string = APP.MESSAGES;
+  suggestionsRoute: string = APP.SUGGESTIONS;
+  welcomeRoute: string = APP.WELCOME;
 
   admin: number = ROLES.ADMIN;
   user: number = ROLES.USER;

@@ -1,0 +1,32 @@
+<div class="table-container p-5">
+
+    <div class="row mb-5">
+        <span class="h1">Lista de sugerencias</span>
+    </div>
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border escomio-txt-oxford-blue" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <table *ngIf="!isLoading" datatable [dtOptions]="dtoptions" class="display">
+        <thead>
+            <tr>
+                <th>Id Usuario</th>
+                <th>Tipo Usuario</th>
+                <th>Pregunta</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let suggestion of suggestions">
+                <td>{{ suggestion.suggested_by }}</td>
+                <td>{{ suggestion.suggested_by_user_role }}</td>
+                <td>{{ suggestion.suggested_question }}</td>
+                <td>{{ suggestion.creation_datetime| date:'medium' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

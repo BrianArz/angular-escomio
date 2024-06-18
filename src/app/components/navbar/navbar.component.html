@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <!-- Logo / Main Menu -->
-    <a [routerLink]="['/', aboutRoute]" class=" navbar-brand">ESCOMIO</a>
+    <a [routerLink]="['/', aboutRoute]" class="ms-5 navbar-brand">ESCOMIO</a>
 
     <!-- Mobile Toggler -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -14,20 +14,32 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <ng-container *ngIf="isLogged">
-          <li class="nav-item">
+          <li class="nav-item me-3">
             <a [routerLink]="['/', chatRoute]" class="nav-link">Chats</a>
           </li>
         </ng-container>
 
         <ng-container *ngIf="role == admin">
-          <li class="nav-item">
-            <a href="#" class="nav-link">Administración</a>
+          <li class="nav-item me-3">
+            <a [routerLink]="['/', usersRoute]" class="nav-link">Usuarios</a>
           </li>
         </ng-container>
 
         <ng-container *ngIf="role == admin">
-          <li class="nav-item">
-            <a href="#" class="nav-link">Sistema</a>
+          <li class="nav-item me-3">
+            <a [routerLink]="['/', messagesRoute]" class="nav-link">Mensajes</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="role == admin">
+          <li class="nav-item me-3">
+            <a [routerLink]="['/', suggestionsRoute]" class="nav-link">Sugerencias</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="role == admin">
+          <li class="nav-item me-3">
+            <a [routerLink]="['/', welcomeRoute]" class="nav-link">Sistema</a>
           </li>
         </ng-container>
       </ul>
